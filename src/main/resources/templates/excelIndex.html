@@ -1,0 +1,85 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Excel导入</title>
+    <style>
+        .label{
+            margin-left: 15px;
+            font: 12px/14px 宋体;
+            color: #E20000;
+        }
+    </style>
+</head>
+<body>
+<form id="myForm" th:action="@{/excel/update}" method="post">
+    <span>数据库类型</span>：
+    <select class="info" name="driverClassName">
+        <option th:selected="${driverClassName == '0'}" value="0">请选择</option>
+        <option th:selected="${driverClassName == 'com.mysql.jdbc.Driver'}" value="com.mysql.jdbc.Driver">MYSQL</option>
+        <option th:selected="${driverClassName == 'com.mysql.jdbc.Driver'}" value="com.mysql.jdbc.Driver">ORACLE</option>
+    </select><span class="label"></span><br/>
+
+    <span>数据库地址</span>：
+    <input class="info" type="text" name="url" th:value="${url}" /><span class="label"></span><br/>
+    <span>用户名</span>：
+    <input class="info" type="text" name="username" th:value="${username}" /><span class="label"></span><br/>
+    <span>密码</span>：
+    <input class="info" type="text" name="password" th:value="${password}" /><span class="label"></span><br/>
+    <input id="ver" type="hidden" name="ver"   th:value="${ver}"/>
+    <input id="testOn" type="submit" value="确定"/>
+</form>
+
+<input id="button" type="button" value="检测数据库设置成功没"><br/>
+<span id="info" th:text="${info}"></span>
+
+</body>
+<script th:src="@{/jquery/jquery-3.3.1.js}" ></script>
+<script>
+
+    $("form").submit(function(){
+       var fiag=true;
+        $(".info").each(function (i, e) {
+            if($(e).val().length <= 0 || $(e).val()==0){
+                $(e).next().text($(e).prev().text()+"不能为空!");
+                fiag= false;
+            }
+        });
+        return fiag;
+    });
+
+    $("#testOn").bind("click",function () {
+        testOn();
+    });
+
+    $("#button").bind("click",function () {
+        testMysql();
+    });
+    function testMysql() {
+        $.ajax({
+            type:"post",
+            url:"/excel/detectionDataSource",
+            data:{},
+            success:function(data){
+                $("#info").text(data);
+            }
+        }).done().fail(function(){
+            $("#info").text("请稍后！正在尝试连接数据库。。。");
+            testMysql();
+        });
+    }
+    function testOn() {
+        $.ajax({
+            type:"post",
+            url:"/excel/testOn",
+            data:{},
+            success:function(data){
+                $("#info").text(data);
+            }
+        }).done().fail(function(){
+            $("#info").text("请稍后！正在重启。。。");
+            testOn();
+        });
+    }
+</script>
+</html>

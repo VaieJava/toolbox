@@ -1,0 +1,98 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>智能小V</title>
+    <link rel="stylesheet" th:href="@{css/chitchatUI.css?time=23154}"type="text/css"/>
+    <link rel="stylesheet" th:href="@{css/default.css}"type="text/css"/>
+    <link rel="stylesheet" th:href="@{css/pmgressbar.css}"type="text/css"/>
+</head>
+
+<body>
+    <div class="outlines">
+        <div class="title-top">
+            <ul class="title-icon">
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <span class="title-name">智能小V</span>
+        </div>
+        <div class="information">
+
+            <div id="content" class="content">
+                <ul id="content-ul">
+                    <li><div class="via-our via"></div><span class="advices-our advices">hello！</span></li>
+                </ul>
+            </div>
+            <div class="coze">
+                <textarea id="input-area"></textarea>
+                <button id="send-but" type="button" class="send-but">发 送</button>
+                <!--<button id="test" type="button" class="send-but">ces</button>-->
+            </div>
+        </div>
+        <div class="property">
+
+            <ul class="pmgress">
+                <li>喜乐：</li>
+                <li>
+                    <div class="progress-bar blue stripes">
+                        <span id="happy"></span>
+                    </div>
+                </li>
+                <li><span id="happy-span"></span></li>
+            </ul>
+            <ul class="pmgress">
+                <li>悲哀：</li>
+                <li>
+                    <div class="progress-bar green glow">
+                        <span id="doleful"></span>
+                    </div>
+                </li>
+                <li><span id="doleful-span"></span></li>
+            </ul>
+            <ul class="pmgress">
+                <li>愤怒：</li>
+                <li>
+                    <div class="progress-bar orange shine">
+                        <span id="anger"></span>
+                    </div>
+                </li>
+                <li><span id="anger-span"></span></li>
+            </ul>
+            <ul class="pmgress">
+                <li>恐惧：</li>
+                <li>
+                    <div class="progress-bar red stripes">
+                        <span id="fear"></span>
+                    </div>
+                </li>
+                <li><span id="fear-span"></span></li>
+            </ul>
+            <div class="log">
+                <span style="color: #9EA0AC;">日志[LOG]</span>
+                <ul>
+                    <li><span class="log-title">【系统】:</span><span class="log-content">正在学习爱仕达大多群翁群翁群翁群无群若群啊实打实大所自行车啊实打实大群翁群翁爱仕达多群翁群翁群翁</span></li>
+                    <li><span class="log-title">【系统】:</span><span class="log-content">正在学习！</span></li>
+                    <li><span class="log-title">【系统】:</span><span class="log-content">正在学习！</span></li>
+                    <li><span class="log-title">【系统】:</span><span class="log-content">正在学习！</span></li>
+                    <li><span class="log-title">【系统】:</span><span class="log-content">正在学习！</span></li>
+                    <li><span class="log-title">【系统】:</span><span class="log-content">正在学习！</span></li>
+                    <li><span class="log-title">【系统】:</span><span class="log-content">正在学习！</span></li>
+                    <li><span class="log-title">【系统】:</span><span class="log-content">正在学习！</span></li>
+                    <li><span class="log-title">【系统】:</span><span class="log-content">正在学习！</span></li>
+                    <li><span class="log-title">【系统】:</span><span class="log-content">正在学习！</span></li>
+                    <li><span class="log-title">【系统】:</span><span class="log-content">正在学习！</span></li>
+                    <li><span class="log-title">【系统】:</span><span class="log-content">正在学习！</span></li>
+                    <li><span class="log-title">【系统】:</span><span class="log-content">正在学习！</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script th:src="@{jquery/jquery-3.3.1.js}" ></script>
+<script th:src="@{jquery/jquery.animateNumber.js}" ></script>
+<!--<script th:src="@{jquery/jquery-latest.min.js}" ></script>-->
+<script th:src="@{js/chitchat.js?time=2131546}" ></script>
+</html>

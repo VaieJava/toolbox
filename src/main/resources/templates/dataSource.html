@@ -1,0 +1,26 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>数据源</title>
+</head>
+<body>
+<span th:text="${info}"></span>
+<input id="button" type="button" value="检测数据库设置成功没"><br/>
+<span id="info"></span>
+<a href="/excel/index">首页</a>
+</body>
+<script th:src="@{/jquery/jquery-3.3.1.js}" ></script>
+<script>
+    $("#button").bind("click",function () {
+        $.ajax({
+            type:"post",
+            url:"/excel/detectionDataSource",
+            data:{},
+            success:function(data){
+                $("#info").text(data);
+            }
+        });
+    });
+</script>
+</html>

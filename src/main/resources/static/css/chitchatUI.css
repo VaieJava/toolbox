@@ -1,0 +1,175 @@
+/*外框*/
+.outlines{
+    margin: auto;
+    background: #FCFCFC;
+    width: 1044px;
+    height: 600px;
+    border:1px solid #EFF0F2;
+    border-radius:7px;
+    box-shadow:#616161 10px 10px 30px 5px ;
+}
+/*消息区*/
+.information{
+    overflow: hidden;
+    width:650px;
+    float:left;
+}
+/*属性区*/
+.property{
+    overflow: hidden;
+    width: 350px;
+    padding: 20px;
+    float:left;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+/* 标题*/
+.title-top{
+    width: 1044px;
+    height: 45px;
+    background:#F4F5F7;
+    overflow: hidden;
+}
+.title-icon{
+    overflow: hidden;
+    float: left;
+}
+.title-icon li{
+    width:15px;
+    height:15px;
+    margin-left: 5px;
+    background: #D8D8D8;
+    margin-top: 15px;
+    border-radius:25px;
+    float: left;
+}
+.title-name{
+    color: #D2CFE0;
+    float: left;
+    margin-top: 10px;
+    margin-left: 300px;
+}
+/*消息记录*/
+.content{
+    overflow-y:scroll;
+    overflow-x:hidden;
+    width:650px;
+    height:345px;
+    border-bottom:1.5px solid #F6F7FA;
+    padding-top: 40px;
+}
+.content ul li{
+    width:650px;
+    overflow: hidden;
+}
+/*消息框*/
+.advices{
+    word-break: break-all;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 15px;
+    font: 14px/14px 宋体;
+    border-radius:7px;
+}
+.advices-our{
+    float: left;
+    background: #F2F3F7;
+    color:#3A486C;
+    margin-left: 10px;
+}
+.advices-peer{
+    float: right;
+    background: #7EAEFF;
+    color:#ffffff;
+    margin-right: 10px;
+}
+/* 输入内容*/
+.coze{
+    width:650px;
+    height:135px;
+}
+.coze textarea{
+    background: #FCFCFC;
+    color: #5F6368;
+    padding: 20px;
+    width:610px;
+    height:80px;
+    border:0px;
+    list-style: none;
+    resize:none
+}
+/*发送按钮 */
+.send-but{
+    float: right;
+    padding: 6px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border:0px;
+    background: #808CDE;
+    color: #FFFFFF;
+    border-radius:2px;
+}
+.send-but:active{
+    background: #ACB6E9;
+}
+ /*头像*/
+.via{
+    border: 1px solid #FFFFFF;
+    border-radius:100px;
+    margin-top: 10px;
+    width:40px;
+    height:40px;
+}
+.via-our{
+    float: left;
+    margin-left: 15px;
+    background: url(../img/touxoang.jpeg) center  ;
+    background-size:100% 100%;
+}
+.via-peer{
+    float: right;
+    margin-right: 15px;
+    background: url(../img/aas.jpg) center  ;
+    background-size:100% 100%;
+}
+/*进度*/
+.pmgress{
+    overflow: hidden;
+    font:12px/24px 黑体;
+    color: #DEE0E6;
+    text-shadow: 0.2px 0.5px 0.1px #9EA0AC;
+}
+.pmgress li{
+    float: left;
+    margin-left: 10px;
+}
+.pmgress li:nth-child(2){
+    padding-top: 8px;
+}
+.log{
+
+margin-top: 20px;
+}
+.log ul{
+    width: 350px;
+    height: 300px;
+    border: 1px solid #F4F4F6;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+.log ul li{
+    padding: 5px;
+    margin: 5px;
+    font: 12px/24px 微软雅黑;
+    width: 300px;
+    margin-top: 10px;
+    background: #DEE0E6;
+    border-radius:5px;
+    display: block;
+}
+.log-title{
+    color: #9EA0AC;
+}
+.log-content{
+    color: #9EA0AC;
+}

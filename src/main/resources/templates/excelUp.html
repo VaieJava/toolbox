@@ -1,0 +1,19 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>EXCEL上传</title>
+</head>
+<body>
+<h2>文件上传示例</h2>
+<hr/>
+<form method="POST" enctype="multipart/form-data" action="/excel/upload">
+    <p>
+        文件：<input type="file" name="file" />
+    </p>
+    <p>
+        <input type="submit" value="上传" />
+    </p>
+</form>
+</body>
+</html>
