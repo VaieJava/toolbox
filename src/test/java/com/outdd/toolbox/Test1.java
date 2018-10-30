@@ -14,7 +14,7 @@ public class Test1 {
 //            System.out.println(chapter);
 //        }
         String txt=ChapterInterImpl.getContent("https://www.xs.la/0_5/1373.html");
-        System.out.println(txt);
+//        System.out.println(txt);
         no.write(txt);
 
     }
