@@ -2,86 +2,24 @@ package com.outdd.toolbox.reptile.service.impl;
 
 
 import com.outdd.toolbox.common.util.HttpUtils;
-import com.outdd.toolbox.reptile.pojo.Chapter;
-import com.outdd.toolbox.reptile.service.IChapterInter;
-import org.apache.http.HttpHost;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
-import org.jsoup.Jsoup;
+import com.outdd.toolbox.reptile.thread.ReadAccessThread;
+import com.outdd.toolbox.reptile.thread.WriteAccessThread;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 
-public class IChapterInterImpl implements IChapterInter {
+public class IChapterInterImpl {
 
     protected  String host = null;
+
     HttpUtils httpUtils =HttpUtils.getInstance();
-
-    protected String crawl(String url) {
-
-        String result="";
-        //采用HttpClient技术
-        try{
-            CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-            // 创建httpget实例
-            HttpGet httpget = new HttpGet(url);
-            // 模拟浏览器 ✔
-            httpget.setHeader("User-Agent",
-                    "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0");
-
-            // 使用代理 IP ✔
-            HttpHost proxy = new HttpHost("117.191.11.74", 8080);
-            RequestConfig config = RequestConfig.custom().setProxy(proxy)
-                    //设置连接超时 ✔
-                    .setConnectTimeout(10000) // 设置连接超时时间 10秒钟
-                    .setSocketTimeout(10000) // 设置读取超时时间10秒钟
-                    .build();
-
-            httpget.setConfig(config);
-
-             CloseableHttpResponse httpResponse = httpClient.execute(httpget);
-            if(host==null){
-                java.net.URL  urlz = new  java.net.URL(url);
-
-                host = "https://"+urlz.getHost();// 获取主机名
-            }
-            result = EntityUtils.toString(httpResponse.getEntity());
-
-        } catch (Exception e) {
-            System.out.println("adas");
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-
-    @Override
-    public List<Chapter> getChapter(String url) {
-        try {
-            String result = crawl(url);
-            Document doc = Jsoup.parse(url);
-            Elements as = doc.select("#list dd a");
-            List<Chapter> chapters = new ArrayList<>();
-            for (Element a : as) {
-                Chapter chapter = new Chapter();
-                chapter.setTitle(a.text());
-                chapter.setUrl("http://www.bxwx8.org" + a.attr("href"));
-                chapters.add(chapter);
-                break;
-            }
-            return chapters;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
     int cs=3;
     int count=0;
     StringBuffer resultContent=new StringBuffer();
@@ -136,6 +74,25 @@ public class IChapterInterImpl implements IChapterInter {
             e.printStackTrace();
         }
         return resultContent.toString();
+    }
+
+    public void asd(String url){
+        int xiet=2;
+         CountDownLatch latch=new CountDownLatch(xiet);//两个工人的协作
+        Queue<Document> queue = new LinkedList<Document>();
+        ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+
+            new Thread(new WriteAccessThread(queue,rwl,latch,url)).start();
+            new Thread(new ReadAccessThread(queue,rwl,latch)).start();
+
+
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("结束了");
     }
 
 }

@@ -13,10 +13,10 @@ public class Test1 {
 //        for (Chapter chapter : chapterList) {
 //            System.out.println(chapter);
 //        }
-        String txt=ChapterInterImpl.getContent("https://www.xs.la/0_5/1373.html");
-//        System.out.println(txt);
-        no.write(txt);
-
+//        String txt=ChapterInterImpl.getContent("https://www.xs.la/0_5/1373.html");
+////        System.out.println(txt);
+//        no.write(txt);
+        ChapterInterImpl.asd("https://read.qidian.com/chapter/x1nzL3Er_ub36JmDw--oJQ2/27cFhnbkH3vM5j8_3RRvhw2");
     }
 
 }
