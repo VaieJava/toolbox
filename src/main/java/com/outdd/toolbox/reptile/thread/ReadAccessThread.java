@@ -44,7 +44,7 @@ public class ReadAccessThread implements Runnable {
     public void read() {
         try {
             while (true) {
-                Thread.sleep(10000);
+
                 System.out.println("读取开始");
                 if (queue.size() > 0) {
                     r.lock();

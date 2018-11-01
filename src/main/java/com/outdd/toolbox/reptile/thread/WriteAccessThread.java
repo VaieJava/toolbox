@@ -5,6 +5,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.Lock;
@@ -53,12 +55,13 @@ public class WriteAccessThread implements Runnable {
                 System.out.println("获取写锁");
                 Document doc = null;
                 try {
-                    doc = httpUtils.executeGetAsDocument(LocalUrl);
+                    doc = httpUtils.executeGetWithSSLAsDocument(LocalUrl);
                     queue.offer(doc);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                filag = isNext(doc,LocalUrl);
+                filag = (Boolean) isNext(doc).get("filag");
+                LocalUrl = (String) isNext(doc).get("url");
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -87,16 +90,16 @@ public class WriteAccessThread implements Runnable {
      * @auther: bjxdts
      * @date: 2018/10/31 14:52
      */
-    public boolean isNext(Document doc,String LocalUrl) throws MalformedURLException {
+    public Map<String,Object> isNext(Document doc) throws MalformedURLException {
+        Map<String,Object> map= new HashMap<String,Object>();
         boolean filag=true;
         Elements next = doc.select("#j_chapterNext");
         if (next.size() > 0) {
-//            LocalUrl = getHost(LocalUrl) + "/0_5/" + next.get(0).attr("href");
-           LocalUrl = next.get(0).attr("href");
-
+            map.put("url","https:"+next.get(0).attr("href"));
         } else {
             filag= false;
         }
-        return filag;
+        map.put("filag",filag);
+        return map;
     }
 }
