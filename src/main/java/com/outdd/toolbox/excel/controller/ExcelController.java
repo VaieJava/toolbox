@@ -53,6 +53,7 @@ public class ExcelController {
     @Autowired
     DataSourceConfig dataSourceConfig;
     static String  path="C:\\Users\\Administrator\\Desktop\\01.xlsx";
+    String site = "excel/";
 
     ExecutorService es =Executors.newCachedThreadPool();//线程池
     @Autowired
@@ -69,13 +70,13 @@ public class ExcelController {
         //把用户数据保存在session域对象中
         httpSession.setAttribute("loginName", uuid);
         map.put("ver", uuid);
-        return "excelIndex";
+        return site+"excelIndex";
     }
 
     @RequestMapping("excelup")
     public String excelup(ModelMap map, HttpSession httpSession){
 
-        return "excelUp";
+        return site+"excelUp";
     }
     /**
      * 文件上传
@@ -184,7 +185,7 @@ public class ExcelController {
         map.put("url",dbMap.get("url"));
         map.put("username",dbMap.get("username"));
         map.put("password",dbMap.get("password"));
-        return "excelIndex";
+        return site+"excelIndex";
     }
 
 

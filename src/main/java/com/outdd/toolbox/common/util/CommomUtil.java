@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 /*
- * TODO: [NAME]
+ * TODO: 公共util类
  * @author VAIE
  * @date: 2018/9/23-22:19
  * @version v1.0

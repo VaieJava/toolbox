@@ -1,0 +1,126 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: head('小说爬虫工具')">
+</head>
+<body>
+<div class="container">
+    <!--缓冲导入-->
+    <div style="margin: auto" th:replace="common/loading :: loadinger"></div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body " style="text-align:center">
+                    <h1>小说爬虫工具</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="input-group mb-3">
+                <div class="dropdown">
+                    <button id="reveal" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        爬取方式
+                    </button>
+                    <div id="dropdown-menu" class="dropdown-menu">
+                        <a class="dropdown-item" data-num="1" href="#">通过名称</a>
+                        <!--<a class="dropdown-item" data-num="2" href="#">通过URL</a>-->
+                    </div>
+                </div>
+                <input  id="parameter" type="text" class="form-control " placeholder="选中爬取方式" name="url">
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-primary" id="confirm">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="progress" style="width: 95%; margin: auto;margin-top:10px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:100% ">
+                        <!--完成度:40%-->
+                    </div>
+                </div>
+                <h1 style="margin: auto;margin-top: 10px;">INFO</h1>
+                <div id="info-panel" style="height: 400px;overflow:scroll;padding: 10px" class="card-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--js导入-->
+<div th:replace="common/footer :: foot"></div>
+</body>
+<script type="text/javascript">
+    // 键盘事件
+    $(document).keypress(function(e) {
+        if (e.which == 13)
+            $("#confirm").click()
+    })
+
+    $("#dropdown-menu a").bind("click",function () {
+        $(this).siblings().removeClass("active");
+        $(this).addClass("active");
+        var name = $(this).text();
+        $("#reveal").text(name);
+        $("#parameter").attr('placeholder',"输入"+name.substring(2));
+        if($(this).attr("data-num") ==1){
+            $("#confirm").click(function (){testTwo();})
+        }else{
+            $("#confirm").click(function (){testOn();})
+        }
+    })
+
+    function bindNovelOne() {
+        $.each($(".btn-light"),function () {
+            $(this).click(function (){formUrl($(this))})
+        })
+    }
+    function formUrl(e) {
+        window.location.href="/novel/getNovelByOne?url="+$(e).attr("data-url")+"&title="+$(e).text();
+        // $(e).attr("disabled","disabled");
+    }
+
+    function testTwo() {
+        $("#info-panel").html("");
+        var name = $("#parameter").val();
+        $.ajax({
+            url: "/novel/getNovelByName",
+            type: "post",
+            data: {name: name},
+            success: function (data) {
+                debugger
+
+                if(data.length != 0){
+                    $.each(data,function(i,map) {
+                        console.info()
+                        var html="<button style='margin: 10px;' class=\"btn btn-light\" data-toggle=\"modal\" data-target=\"#myModal\" data-url='"+map["url"]+"'>"
+                        html+="《"+map["title"]+"》"
+                        html+="<br/><span style='font: 10px/14px 宋体'>"+map["aout"]+"</span>"
+                        html+="</button>"
+                        $("#info-panel").append(html);
+                    })
+                    bindNovelOne();
+                }else{
+                    var html="<div class=\"btn btn-danger\">没有查到</div>"
+                    $("#info-panel").append(html);
+                }
+            }
+        });
+    }
+    function testOn() {
+        $("#info-panel").html("");
+        var url = $("#parameter").val();
+        $.ajax({
+            type: "post",
+            url: "/novel/getNovelByAll",
+            data: {"url": url},
+            success: function (data) {
+                console.info(data)
+            },
+        });
+    }
+
+
+</script>
+</html>

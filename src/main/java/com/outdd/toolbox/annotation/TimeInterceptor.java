@@ -27,11 +27,11 @@ public class TimeInterceptor {
     }
 
     /**
-     * 监控com.henry.advertising.web.service包及其子包的所有public方法
+     * 监控com.outdd.toolbox包及其子包的所有public方法
      * &lt;功能详细描述&gt;
      * @see [类、类#方法、类#成员]
      */
-    @Pointcut("execution(* com.outdd.ai.excel..*.*(..))")
+    @Pointcut("execution(* com.outdd.toolbox.excel..*.*(..))")
     private void pointCutMethod() {
     }
 

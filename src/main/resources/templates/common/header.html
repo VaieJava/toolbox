@@ -1,0 +1,22 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<!-- 公共的头部页面 -->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <title th:text="${title}"></title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+
+    <link rel="stylesheet" th:href="@{/bootstrap-4.0.0-dist/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/default.css}" type="text/css"/>
+    <script src="https://use.typekit.net/xzp1tcb.js"></script>
+    <script>
+        try { Typekit.load({ async: true }); } catch (e) {}
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.8/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
+
+</head>
+</html>
