@@ -1,7 +1,7 @@
-package com.outdd.toolbox.reptile.controller;
+package com.outdd.toolbox.reptile.novel.controller;
 
 import com.outdd.toolbox.common.util.RegexUtils;
-import com.outdd.toolbox.reptile.service.NovelService;
+import com.outdd.toolbox.reptile.novel.service.NovelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
