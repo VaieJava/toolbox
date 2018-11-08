@@ -1,8 +1,8 @@
-package com.outdd.toolbox.reptile.thread;
+package com.outdd.toolbox.reptile.novel.thread;
 
 import com.outdd.toolbox.common.util.io.NovelIo;
-import com.outdd.toolbox.reptile.pojo.NovelAssist;
-import com.outdd.toolbox.reptile.util.ReptileUtil;
+import com.outdd.toolbox.reptile.novel.pojo.NovelAssist;
+import com.outdd.toolbox.reptile.novel.util.ReptileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import java.util.List;

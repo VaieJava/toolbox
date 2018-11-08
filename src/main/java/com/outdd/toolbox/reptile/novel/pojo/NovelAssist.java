@@ -1,4 +1,4 @@
-package com.outdd.toolbox.reptile.pojo;
+package com.outdd.toolbox.reptile.novel.pojo;
 
 import lombok.Data;
 import org.jsoup.nodes.Document;

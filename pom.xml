@@ -200,10 +200,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <fork>true</fork>
                     <mainClass>com.outdd.toolbox.ToolboxApplication</mainClass><!-- 项目运行main方法的全路径 -->
@@ -234,6 +230,17 @@
                     <compilerArguments>
                         <extdirs>${project.basedir}/src/main/resources/lib</extdirs><!-- maven无法导入的依赖，我自己建的lib包 -->
                     </compilerArguments>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.2</version>
+                <configuration>
+                    <verbose>true</verbose>
+                    <overwrite>true</overwrite>
                 </configuration>
             </plugin>
 

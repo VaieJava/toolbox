@@ -1,13 +1,13 @@
-package com.outdd.toolbox.reptile.service.impl;
+package com.outdd.toolbox.reptile.novel.service.impl;
 
 
 
-import com.outdd.toolbox.reptile.pojo.NovelAssist;
-import com.outdd.toolbox.reptile.service.NovelService;
-import com.outdd.toolbox.reptile.thread.GetDirectoryToIoThread;
-import com.outdd.toolbox.reptile.thread.GetDirectoryToQueueThread;
-import com.outdd.toolbox.reptile.thread.GetNovelListThread;
-import com.outdd.toolbox.reptile.util.ReptileUtil;
+import com.outdd.toolbox.reptile.novel.pojo.NovelAssist;
+import com.outdd.toolbox.reptile.novel.service.NovelService;
+import com.outdd.toolbox.reptile.novel.thread.GetDirectoryToIoThread;
+import com.outdd.toolbox.reptile.novel.thread.GetDirectoryToQueueThread;
+import com.outdd.toolbox.reptile.novel.thread.GetNovelListThread;
+import com.outdd.toolbox.reptile.novel.util.ReptileUtil;
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 import java.util.*;

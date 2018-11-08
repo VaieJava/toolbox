@@ -1,9 +1,10 @@
-package com.outdd.toolbox.reptile.util;
+package com.outdd.toolbox.reptile.novel.util;
 
 import com.outdd.toolbox.common.util.CommomUtil;
 import com.outdd.toolbox.common.util.HttpUtils;
 import com.outdd.toolbox.common.util.io.NovelIo;
 import lombok.Data;
+import org.apache.http.protocol.RequestTargetHost;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -76,7 +77,7 @@ public class ReptileUtil {
      * @auther: bjxdts
      * @date: 2018/10/31 15:07
      */
-    public String getHost(String url) throws MalformedURLException {
+    public static String getHost(String url) throws MalformedURLException {
 
         java.net.URL Url = new java.net.URL(url);
         return "https://" + Url.getHost();// 获取主机名;
@@ -129,7 +130,6 @@ public class ReptileUtil {
      * TODO: 通过地址获取目录标题和地址
      * @param url 网络地址
      * @param titleRule 标题规则
-     * @param aoutRule 作者规则
      * @return: java.util.List<java.util.Map<java.lang.String,java.lang.String>>
      * @auther: vaie
      * @date: 2018/11/3 17:59
@@ -217,13 +217,24 @@ public class ReptileUtil {
      */
     public static List<Document> getDirectoryAll(String url,String title,String directoryRule) {
         Document doc = ReptileUtil.getDocumentOfHttps(url);
+
         List<Document> fdList = null;
         if (CommomUtil.isNotNull(doc)) {
             Elements titleUrls = doc.select(directoryRule);//标题
             fdList = new ArrayList<Document>();
+            String host= null;
+            try {
+                host = getHost(url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
             for (Element titleUrl : titleUrls) {
-                Document document = ReptileUtil.getDocumentOfHttps("https:" + titleUrl.attr("href"));
-                fdList.add(document);
+                String urll=host+"" + titleUrl.attr("href");
+                Document document = ReptileUtil.getDocumentOfHttps(urll);
+                if(CommomUtil.isNotNull(document)){
+                    fdList.add(document);
+                }
+
             }
         }
         return fdList;
@@ -241,7 +252,10 @@ public class ReptileUtil {
     public static String DocumentToTxt(List<Document> fdList,String titleRule,String contentsRule){
         StringBuilder Details=new StringBuilder();
         for (Document doc:fdList){
-            Details.append(ReptileUtil.getDetails(doc,titleRule,contentsRule));
+            if(CommomUtil.isNotNull(doc)){
+                Details.append(ReptileUtil.getDetails(doc,titleRule,contentsRule));
+                System.out.println(Details.toString());
+            }
         }
         return Details.toString();
     }
