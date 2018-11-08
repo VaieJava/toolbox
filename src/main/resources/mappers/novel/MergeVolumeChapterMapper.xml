@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.outdd.toolbox.reptile.novel.dao.MergeVolumeChapterMapper" >
+  <resultMap id="BaseResultMap" type="com.outdd.toolbox.reptile.novel.pojo.MergeVolumeChapter" >
+    <constructor >
+      <arg column="volume_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="chapter_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.outdd.toolbox.reptile.novel.pojo.MergeVolumeChapter" >
+    insert into merge_volume_chapter (volume_code, chapter_code)
+    values (#{volumeCode,jdbcType=VARCHAR}, #{chapterCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.MergeVolumeChapter" >
+    insert into merge_volume_chapter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="volumeCode != null" >
+        volume_code,
+      </if>
+      <if test="chapterCode != null" >
+        chapter_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="volumeCode != null" >
+        #{volumeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterCode != null" >
+        #{chapterCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
