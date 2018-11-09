@@ -25,7 +25,7 @@
       <arg column="score" jdbcType="REAL" javaType="java.lang.Float" />
       <arg column="page_view" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="word_num" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <arg column="description" jdbcType="LONGVARBINARY" javaType="_byte[]" />
+      <arg column="description" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -54,7 +54,7 @@
     values (#{code,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
       #{classify,jdbcType=VARCHAR}, #{over,jdbcType=INTEGER}, #{signed,jdbcType=INTEGER}, 
       #{score,jdbcType=REAL}, #{pageView,jdbcType=BIGINT}, #{wordNum,jdbcType=BIGINT}, 
-      #{description,jdbcType=LONGVARBINARY})
+      #{description,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.NovelDetails" >
     insert into novel_details
@@ -119,7 +119,7 @@
         #{wordNum,jdbcType=BIGINT},
       </if>
       <if test="description != null" >
-        #{description,jdbcType=LONGVARBINARY},
+        #{description,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -151,7 +151,7 @@
         word_num = #{wordNum,jdbcType=BIGINT},
       </if>
       <if test="description != null" >
-        description = #{description,jdbcType=LONGVARBINARY},
+        description = #{description,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where code = #{code,jdbcType=VARCHAR}
@@ -166,7 +166,7 @@
       score = #{score,jdbcType=REAL},
       page_view = #{pageView,jdbcType=BIGINT},
       word_num = #{wordNum,jdbcType=BIGINT},
-      description = #{description,jdbcType=LONGVARBINARY}
+      description = #{description,jdbcType=LONGVARCHAR}
     where code = #{code,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.outdd.toolbox.reptile.novel.pojo.NovelDetails" >

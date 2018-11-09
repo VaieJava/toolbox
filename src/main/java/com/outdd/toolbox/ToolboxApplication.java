@@ -1,5 +1,6 @@
 package com.outdd.toolbox;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @SpringBootApplication
 @ServletComponentScan
+@MapperScan(basePackages="com.outdd.toolbox.*.dao")
 public class ToolboxApplication extends SpringBootServletInitializer {
 
     private static String[] args;

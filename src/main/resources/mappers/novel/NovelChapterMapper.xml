@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.outdd.toolbox.reptile.novel.dao.NovelVolumeMapper" >
-  <resultMap id="BaseResultMap" type="com.outdd.toolbox.reptile.novel.pojo.NovelVolume" >
+<mapper namespace="com.outdd.toolbox.reptile.novel.dao.NovelChapterMapper" >
+  <resultMap id="BaseResultMap" type="com.outdd.toolbox.reptile.novel.pojo.NovelChapter" >
     <constructor >
       <idArg column="code" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="chapte_cnt" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="word_cnt" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="toll" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="premiere_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    code, name, chapte_cnt, word_cnt, toll
+    code, name, word_cnt, toll, premiere_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from novel_volume
+    from novel_chapter
     where code = #{code,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from novel_volume
+    delete from novel_chapter
     where code = #{code,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.outdd.toolbox.reptile.novel.pojo.NovelVolume" >
-    insert into novel_volume (code, name, chapte_cnt, 
-      word_cnt, toll)
-    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{chapteCnt,jdbcType=BIGINT}, 
-      #{wordCnt,jdbcType=BIGINT}, #{toll,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.outdd.toolbox.reptile.novel.pojo.NovelChapter" >
+    insert into novel_chapter (code, name, word_cnt, 
+      toll, premiere_date)
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{wordCnt,jdbcType=BIGINT}, 
+      #{toll,jdbcType=INTEGER}, #{premiereDate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.NovelVolume" >
-    insert into novel_volume
+  <insert id="insertSelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.NovelChapter" >
+    insert into novel_chapter
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="code != null" >
         code,
@@ -38,14 +38,14 @@
       <if test="name != null" >
         name,
       </if>
-      <if test="chapteCnt != null" >
-        chapte_cnt,
-      </if>
       <if test="wordCnt != null" >
         word_cnt,
       </if>
       <if test="toll != null" >
         toll,
+      </if>
+      <if test="premiereDate != null" >
+        premiere_date,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -55,39 +55,22 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="chapteCnt != null" >
-        #{chapteCnt,jdbcType=BIGINT},
-      </if>
       <if test="wordCnt != null" >
         #{wordCnt,jdbcType=BIGINT},
       </if>
       <if test="toll != null" >
         #{toll,jdbcType=INTEGER},
       </if>
+      <if test="premiereDate != null" >
+        #{premiereDate,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
-  <!-- 批量插入生成的兑换码 -->
-  <insert id ="insertBatch" parameterType="java.util.List" >
-    insert into novel_volume
-    (code,name)
-    VALUES
-    <foreach collection ="list" item="volume" index= "index" separator =",">
-
-      (#{volume.code,jdbcType=VARCHAR},
-
-          #{volume.name,jdbcType=VARCHAR})
-
-
-    </foreach >
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.NovelVolume" >
-    update novel_volume
+  <update id="updateByPrimaryKeySelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.NovelChapter" >
+    update novel_chapter
     <set >
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="chapteCnt != null" >
-        chapte_cnt = #{chapteCnt,jdbcType=BIGINT},
       </if>
       <if test="wordCnt != null" >
         word_cnt = #{wordCnt,jdbcType=BIGINT},
@@ -95,15 +78,18 @@
       <if test="toll != null" >
         toll = #{toll,jdbcType=INTEGER},
       </if>
+      <if test="premiereDate != null" >
+        premiere_date = #{premiereDate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where code = #{code,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.outdd.toolbox.reptile.novel.pojo.NovelVolume" >
-    update novel_volume
+  <update id="updateByPrimaryKey" parameterType="com.outdd.toolbox.reptile.novel.pojo.NovelChapter" >
+    update novel_chapter
     set name = #{name,jdbcType=VARCHAR},
-      chapte_cnt = #{chapteCnt,jdbcType=BIGINT},
       word_cnt = #{wordCnt,jdbcType=BIGINT},
-      toll = #{toll,jdbcType=INTEGER}
+      toll = #{toll,jdbcType=INTEGER},
+      premiere_date = #{premiereDate,jdbcType=TIMESTAMP}
     where code = #{code,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -3,6 +3,8 @@ package com.outdd.toolbox.reptile.novel.pojo;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
+
 @Data
 public class NovelDetails implements Serializable {
     private String code;
@@ -23,11 +25,14 @@ public class NovelDetails implements Serializable {
 
     private Long wordNum;
 
-    private byte[] description;
+    private String description;
+
+    private List<NovelVolume> novelVolumes;
 
     private static final long serialVersionUID = 1L;
 
-    public NovelDetails(String code, String title, String author, String classify, Integer over, Integer signed, Float score, Long pageView, Long wordNum, byte[] description) {
+
+    public NovelDetails(String code, String title, String author, String classify, Integer over, Integer signed, Float score, Long pageView, Long wordNum, String description) {
         this.code = code;
         this.title = title;
         this.author = author;
@@ -40,5 +45,6 @@ public class NovelDetails implements Serializable {
         this.description = description;
     }
 
-
+    public NovelDetails() {
+    }
 }

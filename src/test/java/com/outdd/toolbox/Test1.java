@@ -10,8 +10,9 @@ public class Test1 {
     @Test
     public void test1(){
         NovelService novelService = new NovelServiceImplTwo();
-        String asd=novelService.getNovelByOne("https://www.yangguiweihuo.com/34/34173/","");
-        System.out.println(asd);
+//        String asd=novelService.getNovelByOne("https://www.yangguiweihuo.com/34/34173/","");
+////        System.out.println(asd);
+        ((NovelServiceImplTwo) novelService).getNovelChapter("");
 //        novelService.getNovelByAll(url);
 //        List<Map<String,String>> list = novelService.getNovelByName("阿萨德");
 //        for(Map<String,String> map:list){

@@ -3,22 +3,23 @@ package com.outdd.toolbox.reptile.novel.pojo;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
 @Data
-public class NovelVolume implements Serializable {
+public class NovelChapter implements Serializable {
     private String code;
 
     private String name;
 
-    private long chapteCnt;
-
-    private long wordCnt;
+    private Long wordCnt;
 
     private Integer toll;
 
-    private List<NovelChapter> novelChapterList;
+    private Date premiereDate;
 
     private static final long serialVersionUID = 1L;
+
+    private String detailsCode;
+
 
 }

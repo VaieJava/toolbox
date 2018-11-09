@@ -31,4 +31,5 @@ public interface NovelService {
      * @date: 2018/11/3 17:42
      */
     public List<Map<String,String>> getNovelByName(String NovelName);
+
 }
