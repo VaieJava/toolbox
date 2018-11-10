@@ -1,10 +1,4 @@
-package com.outdd.toolbox.ui;*
-        *@Author chengpunan
-        *@Description //TODO $
- *@Date $ $
-        *@Param $
-        *@return $
-        **/
+package com.outdd.toolbox.ui;
 
 public class asd {
 }

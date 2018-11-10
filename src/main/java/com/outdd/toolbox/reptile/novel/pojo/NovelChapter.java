@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class NovelChapter implements Serializable {
@@ -19,7 +20,17 @@ public class NovelChapter implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String detailsCode;
 
+    private NovelContent novelContent;
 
+    public NovelChapter(String code, String name, Long wordCnt, Integer toll, Date premiereDate) {
+        this.code = code;
+        this.name = name;
+        this.wordCnt = wordCnt;
+        this.toll = toll;
+        this.premiereDate = premiereDate;
+    }
+
+    public NovelChapter() {
+    }
 }

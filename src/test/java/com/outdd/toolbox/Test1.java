@@ -3,6 +3,8 @@ package com.outdd.toolbox;
 import com.outdd.toolbox.reptile.novel.service.NovelService;
 import com.outdd.toolbox.reptile.novel.service.impl.NovelServiceImpl;
 import com.outdd.toolbox.reptile.novel.service.impl.NovelServiceImplTwo;
+import com.outdd.toolbox.reptile.novel.util.ReptileUtil;
+import org.jsoup.nodes.Document;
 import org.junit.Test;
 
 public class Test1 {
@@ -11,8 +13,9 @@ public class Test1 {
     public void test1(){
         NovelService novelService = new NovelServiceImplTwo();
 //        String asd=novelService.getNovelByOne("https://www.yangguiweihuo.com/34/34173/","");
-////        System.out.println(asd);
-        ((NovelServiceImplTwo) novelService).getNovelChapter("");
+////        System.out.println(asd);url="";
+        Document doc =ReptileUtil.getDocumentOfHttps("https://book.qidian.com/info/1010734492");
+        ((NovelServiceImplTwo) novelService).getNovelVolume(doc);
 //        novelService.getNovelByAll(url);
 //        List<Map<String,String>> list = novelService.getNovelByName("阿萨德");
 //        for(Map<String,String> map:list){

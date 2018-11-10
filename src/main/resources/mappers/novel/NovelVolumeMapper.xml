@@ -9,6 +9,16 @@
       <arg column="word_cnt" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="toll" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
+    <!-- association字面意思关联，这里只专门做一对一关联； property表示是com.mybatis.bean.StudentTemp中的属性名称；
+           javaType表示该属性是什么类型对象 -->
+    <collection  property="novelChapterList" ofType="com.outdd.toolbox.reptile.novel.pojo.NovelChapter">
+      <!-- property 表示com.mybatis.bean.Class中的属性； column 表示表中的列名 -->
+      <id property="code" column="ccode" />
+      <result property="name" column="cname" />
+      <result property="toll" column="ctoll" />
+      <result property="wordCnt" column="cword_cnt" />
+      <result property="premiereDate" column="cpremiere_date" />
+    </collection >
   </resultMap>
   <sql id="Base_Column_List" >
     code, name, chapte_cnt, word_cnt, toll
@@ -18,6 +28,20 @@
     <include refid="Base_Column_List" />
     from novel_volume
     where code = #{code,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPrimaryKeyList" resultMap="BaseResultMap" >
+    select
+    v.code, v.name, v.chapte_cnt, v.word_cnt, v.toll ,
+    c.code ccode, c.name cname, c.word_cnt cword_cnt, c.toll ctoll, c.premiere_date cpremiere_date
+    from novel_volume v
+    left JOIN merge_volume_chapter mvc on mvc.volume_code=v.code
+    left JOIN novel_chapter c on c.code = mvc.chapter_code
+    where v.code in (
+    <foreach collection ="list" item="mdv" index= "index" separator =",">
+      #{mdv.volumeCode,jdbcType=VARCHAR}
+    </foreach >
+    )
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from novel_volume

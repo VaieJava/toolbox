@@ -1,7 +1,10 @@
 package com.outdd.toolbox.reptile.novel.pojo;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
 public class MergeChapterContent implements Serializable {
     private String chapterCode;
 
@@ -14,11 +17,6 @@ public class MergeChapterContent implements Serializable {
         this.contentCode = contentCode;
     }
 
-    public String getChapterCode() {
-        return chapterCode;
-    }
-
-    public String getContentCode() {
-        return contentCode;
+    public MergeChapterContent() {
     }
 }

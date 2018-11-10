@@ -11,9 +11,9 @@ public class NovelVolume implements Serializable {
 
     private String name;
 
-    private long chapteCnt;
+    private Long chapteCnt;
 
-    private long wordCnt;
+    private Long wordCnt;
 
     private Integer toll;
 
@@ -21,4 +21,14 @@ public class NovelVolume implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public NovelVolume(String code, String name, Long chapteCnt, Long wordCnt, Integer toll) {
+        this.code = code;
+        this.name = name;
+        this.chapteCnt = chapteCnt;
+        this.wordCnt = wordCnt;
+        this.toll = toll;
+    }
+
+    public NovelVolume() {
+    }
 }

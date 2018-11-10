@@ -1,7 +1,9 @@
 package com.outdd.toolbox.reptile.novel.pojo;
 
-import java.io.Serializable;
+import lombok.Data;
 
+import java.io.Serializable;
+@Data
 public class NovelContent implements Serializable {
     private String code;
 
@@ -14,11 +16,6 @@ public class NovelContent implements Serializable {
         this.content = content;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public byte[] getContent() {
-        return content;
+    public NovelContent() {
     }
 }
