@@ -66,6 +66,21 @@
       </if>
     </trim>
   </insert>
+  <!-- 批量插入生成的兑换码 -->
+  <insert id ="insertBatch" parameterType="java.util.List" >
+    insert into novel_chapter
+    (code,name,premiere_date)
+    VALUES
+    <foreach collection ="list" item="chapter" index= "index" separator =",">
+
+      (#{chapter.code,jdbcType=VARCHAR},
+
+      #{chapter.name,jdbcType=VARCHAR},
+      #{chapter.premiereDate,jdbcType=TIMESTAMP})
+
+
+    </foreach >
+  </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.NovelChapter" >
     update novel_chapter
     <set >

@@ -1,10 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: head(${title})">
+
 </head>
 <body>
-$END$
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <img src="//bookcover.yuewen.com/qdbimg/349573/1012854291/180" class="img-thumbnail" alt="Cinque Terre">
+                </div>
+                <div class="col-sm-6">
+                    <h1>
+                        <small class="font-weight-bold"><span th:text="${entity.title}"></span></small>
+                        <span>
+                        <a th:text="${entity.author}"></a>
+                        著
+                    </span>
+                    </h1>
+                    <p>
+                        <span> </span>
+                        <a href="#" class="badge badge-pill badge-danger" th:text="${entity.classify}"></a>
+                    </p>
+                    <p th:text="${entity.description}"></p>
+                    <p>
+                        <em th:text="${entity.wordNum}"></em>
+                        <cite>字</cite>
+                        <i>|</i>
+                        <em th:text="${entity.pageView}"></em>
+                        <cite>点击量</cite>
+                        <i>|</i>
+                    </p>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Nav tabs -->
+    <ul style="background-color: #FFFFFF;" class="nav" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home">作品信息</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu1">目录(章)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu2">作品讨论(59条)</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div style="background-color: #FFFFFF;padding: 20px;" class="tab-content">
+        <div id="home" class="container tab-pane active"><br>
+            <div>
+                <p th:text="${entity.description}"></p>
+            </div>
+        </div>
+        <div id="menu1" class=" container tab-pane fade"><br>
+
+                <div th:each="volume:${volumeList}">
+                    <h3 th:text="${volume.name}"></h3>  
+                    <ul class="row">
+                        <li style="border-bottom: 1px solid #F2F2F2;" class="col-4" th:each="chapter:${volume.novelChapterList}">
+                            <a class="text-nowrap" href="#" th:text="${chapter.name}" th:title="'首发时间：'+${chapter.premiereDate}+'章节字数：'+${chapter.wordCnt}">
+                            </a>
+                        </li>
+                    </ul>
+                 </div>
+
+        </div>
+        <div id="menu2" class="container tab-pane fade"><br>
+            <h3>Menu 2</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+        </div>
+    </div>
+</div>
+</div>
+<!--js导入-->
+<div th:replace="common/footer :: foot"></div>
 </body>
 </html>

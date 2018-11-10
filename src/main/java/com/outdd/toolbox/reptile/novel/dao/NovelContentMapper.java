@@ -1,7 +1,9 @@
 package com.outdd.toolbox.reptile.novel.dao;
 
 import com.outdd.toolbox.reptile.novel.pojo.NovelContent;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface NovelContentMapper {
     int deleteByPrimaryKey(String code);
 

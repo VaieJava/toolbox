@@ -30,4 +30,18 @@
       </if>
     </trim>
   </insert>
+  <!-- 批量插入生成的兑换码 -->
+  <insert id ="insertBatch" parameterType="java.util.List" >
+    insert into merge_volume_chapter
+    (volume_code, chapter_code)
+    VALUES
+    <foreach collection ="list" item="merge" index= "index" separator =",">
+
+      ( #{merge.volumeCode,jdbcType=VARCHAR},
+
+      #{merge.chapterCode,jdbcType=VARCHAR})
+
+
+    </foreach >
+  </insert>
 </mapper>

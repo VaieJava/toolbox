@@ -7,6 +7,14 @@
       <arg column="volume_code" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    details_code,volume_code
+    from merge_details_volume
+    where details_code = #{code,jdbcType=VARCHAR}
+  </select>
+
   <insert id="insert" parameterType="com.outdd.toolbox.reptile.novel.pojo.MergeDetailsVolume" >
     insert into merge_details_volume (details_code, volume_code)
     values (#{detailsCode,jdbcType=VARCHAR}, #{volumeCode,jdbcType=VARCHAR})
@@ -29,5 +37,19 @@
         #{volumeCode,jdbcType=VARCHAR},
       </if>
     </trim>
+  </insert>
+  <!-- 批量插入生成的兑换码 -->
+  <insert id ="insertBatch" parameterType="java.util.List" >
+    insert into merge_details_volume
+    (details_code,volume_code)
+    VALUES
+    <foreach collection ="list" item="merge" index= "index" separator =",">
+
+      ( #{merge.detailsCode,jdbcType=VARCHAR},
+
+        #{merge.volumeCode,jdbcType=VARCHAR})
+
+
+    </foreach >
   </insert>
 </mapper>
