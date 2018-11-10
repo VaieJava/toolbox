@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,19 +23,19 @@ import java.util.List;
 @SpringBootTest
 @MapperScan(basePackages = "com.outdd.toolbox.**.dao")
 public class ToolboxApplicationTests {
-    @Autowired
+    @Resource
     NovelDetailsMapper novelDetailsMapper;
-    @Autowired
+    @Resource
     NovelVolumeMapper novelVolumeMapper;
-    @Autowired
+    @Resource
     NovelChapterMapper novelChapterMapper;
-    @Autowired
+    @Resource
     MergeDetailsVolumeMapper mergeDetailsVolumeMapper;
-    @Autowired
+    @Resource
     MergeVolumeChapterMapper mergeVolumeChapterMapper;
-    @Autowired
+    @Resource
     MergeChapterContentMapper mergeChapterContentMapper;
-    @Autowired
+    @Resource
     NovelContentMapper novelContentMapper;
 
     @Test
