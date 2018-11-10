@@ -83,6 +83,12 @@ public class ReptileUtil {
         return "https://" + Url.getHost();// 获取主机名;
     }
 
+    public static String getUrl(Document doc){
+
+        return  "https:" + doc.select("a").get(0).attr("href");
+    }
+
+
     /**
      * TODO: 查询是否有下一章
      * @param doc

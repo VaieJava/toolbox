@@ -1,6 +1,9 @@
 package com.outdd.toolbox.reptile.novel.service;
 
 
+import com.outdd.toolbox.reptile.novel.pojo.NovelDetails;
+import org.jsoup.nodes.Document;
+
 import java.util.List;
 import java.util.Map;
 
@@ -31,5 +34,6 @@ public interface NovelService {
      * @date: 2018/11/3 17:42
      */
     public List<Map<String,String>> getNovelByName(String NovelName);
+
 
 }

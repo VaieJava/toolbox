@@ -54,11 +54,6 @@ public class GetDirectoryToIoThread implements Runnable {
                     Map<String,List<Document>> map = directoryQueue.poll();
                     r.unlock();
                     for (String fileName:map.keySet()){
-//                        StringBuilder Details=new StringBuilder();
-//                        for (Document doc:map.get(fileName)){
-//                            Details.append(ReptileUtil.getDetails(doc,titleRule,contentsRule));
-//                        }
-//                        no.write(Details.toString(), fileName);
                         String de=ReptileUtil.DocumentToTxt(map.get(fileName),titleRule,contentsRule);
                         no.write(de,fileName);
                     }
