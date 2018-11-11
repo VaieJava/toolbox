@@ -133,6 +133,40 @@ public class ReptileUtil {
     }
 
     /**
+     * TODO: 爬取小说内容信息
+     *
+     * @param doc Document类
+     * @return: NovelVolume 内容类
+     * @auther: vaie
+     * @date: 2018/11/9 22:40
+     */
+    public static String getContent(Document doc) {
+        String content="";
+        if (CommomUtil.isNotNull(doc)) {
+            try {
+                Element contents = doc.select(".j_readContent").get(0);//内容
+                content=(contents.text().replaceAll(" ", "\r\n") + "\r\n");
+            }catch (Exception e){
+
+            }
+
+        }
+        return content;
+    }
+    /**
+     * TODO: 爬取小说内容信息
+     *
+     * @param url Document类
+     * @return: NovelVolume 内容类
+     * @auther: vaie
+     * @date: 2018/11/9 22:40
+     */
+    public static String getContent(String  url) {
+
+        return getContent(ReptileUtil.getDocumentOfHttps(url));
+    }
+
+    /**
      * TODO: 通过地址获取目录标题和地址
      * @param url 网络地址
      * @param titleRule 标题规则

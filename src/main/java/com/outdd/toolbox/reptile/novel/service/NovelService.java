@@ -1,8 +1,6 @@
 package com.outdd.toolbox.reptile.novel.service;
 
 
-import com.outdd.toolbox.reptile.novel.pojo.NovelDetails;
-import org.jsoup.nodes.Document;
 
 import java.util.List;
 import java.util.Map;

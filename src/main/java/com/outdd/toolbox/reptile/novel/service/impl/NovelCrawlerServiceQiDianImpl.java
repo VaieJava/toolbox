@@ -1,11 +1,11 @@
 package com.outdd.toolbox.reptile.novel.service.impl;
 
 import com.outdd.toolbox.common.util.CommomUtil;
-import com.outdd.toolbox.reptile.novel.pojo.NovelChapter;
-import com.outdd.toolbox.reptile.novel.pojo.NovelContent;
-import com.outdd.toolbox.reptile.novel.pojo.NovelDetails;
-import com.outdd.toolbox.reptile.novel.pojo.NovelVolume;
+import com.outdd.toolbox.reptile.novel.pojo.BookInfo;
+import com.outdd.toolbox.reptile.novel.pojo.ChapterInfo;
+import com.outdd.toolbox.reptile.novel.pojo.VolumeInfo;
 import com.outdd.toolbox.reptile.novel.service.NovelCrawlerService;
+import com.outdd.toolbox.reptile.novel.util.NovelUtil;
 import com.outdd.toolbox.reptile.novel.util.ReptileUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,7 +13,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
-import javax.xml.parsers.DocumentBuilder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +32,7 @@ public class NovelCrawlerServiceQiDianImpl implements NovelCrawlerService {
      * @return NovelDetails
      */
     @Override
-    public NovelDetails crawlNovelDetails(String url) {
+    public BookInfo crawlNovelDetails(String url) {
 
         return crawlNovelDetails(ReptileUtil.getDocumentOfHttps(url));
     }
@@ -47,7 +46,7 @@ public class NovelCrawlerServiceQiDianImpl implements NovelCrawlerService {
      * @date: 2018/11/9 22:40
      */
     @Override
-    public NovelVolume crawlNovelVolume(String url) {
+    public VolumeInfo crawlNovelVolume(String url) {
         return crawlNovelVolume(ReptileUtil.getDocumentOfHttps(url));
     }
 
@@ -61,22 +60,10 @@ public class NovelCrawlerServiceQiDianImpl implements NovelCrawlerService {
      * @date: 2018/11/9 22:40
      */
     @Override
-    public NovelChapter crawlNovelChapter(String url) {
+    public ChapterInfo crawlNovelChapter(String url) {
         return crawlNovelChapter(ReptileUtil.getDocumentOfHttps(url));
     }
 
-    /**
-     * TODO: 爬取小说内容信息
-     *
-     * @param url 网络地址
-     * @return: NovelVolume 内容类
-     * @auther: vaie
-     * @date: 2018/11/9 22:40
-     */
-    @Override
-    public NovelContent crawlNovelContent(String url) {
-        return crawlNovelContent(ReptileUtil.getDocumentOfHttps(url));
-    }
 
     /**
      * TODO: 爬取小说详情信息
@@ -85,7 +72,7 @@ public class NovelCrawlerServiceQiDianImpl implements NovelCrawlerService {
      * @return List<NovelDetails> 多个
      */
     @Override
-    public List<NovelDetails> crawlNovelDetailsList(String url) {
+    public List<BookInfo> crawlNovelDetailsList(String url) {
         return crawlNovelDetailsList(ReptileUtil.getDocumentOfHttps(url));
     }
 
@@ -96,7 +83,7 @@ public class NovelCrawlerServiceQiDianImpl implements NovelCrawlerService {
      * @return List<NovelVolume> 多个
      */
     @Override
-    public List<NovelVolume> crawlNovelVolumeList(String url) {
+    public List<VolumeInfo> crawlNovelVolumeList(String url) {
         return crawlNovelVolumeList(ReptileUtil.getDocumentOfHttps(url));
     }
 
@@ -107,22 +94,11 @@ public class NovelCrawlerServiceQiDianImpl implements NovelCrawlerService {
      * @return List<NovelChapter> 多个
      */
     @Override
-    public List<NovelChapter> crawlNovelChapterList(String url) {
+    public List<ChapterInfo> crawlNovelChapterList(String url) {
         return crawlNovelChapterList(ReptileUtil.getDocumentOfHttps(url));
     }
 
 
-    /**
-     * TODO: 爬取小说内容信息
-     *
-     * @param url 网络地址
-     * @return List<NovelChapter> 多个
-     */
-    @Override
-    public List<NovelContent> crawlNovelContentList(String url) {
-        return crawlNovelContentList(ReptileUtil.getDocumentOfHttps(url));
-    }
-
     //*****************************************************************************************************
     //*                                                                                                   *
     //*                                                                                                   *
@@ -130,7 +106,8 @@ public class NovelCrawlerServiceQiDianImpl implements NovelCrawlerService {
     //*                                                                                                   *
     //*****************************************************************************************************
 
-
+    private long bookId;
+    private long volumeId;
     /**
      * TODO: 爬取小说详情信息
      *
@@ -138,34 +115,42 @@ public class NovelCrawlerServiceQiDianImpl implements NovelCrawlerService {
      * @return NovelDetails
      */
     @Override
-    public NovelDetails crawlNovelDetails(Document doc) {
-        NovelDetails entity = null;
+    public BookInfo crawlNovelDetails(Document doc) {
+
+        BookInfo entity = null;
         if (CommomUtil.isNotNull(doc)) {
-            entity = new NovelDetails();
+            entity = new BookInfo();
+            try {
+                Elements imgs = doc.select(".book-img img");
+                String  src=imgs.get(0).attr("src");
+                //作品图片
+                entity.setBookImg(src.getBytes());
+            }catch (Exception e){
+
+            }
+
             Elements titleUrls = doc.select(".book-info");
             for (Element titleUrl : titleUrls) {
                 //标题
-                entity.setTitle(titleUrl.child(0).child(0).text());
+                entity.setBookName(titleUrl.child(0).child(0).text());
                 //作者
                 entity.setAuthor(titleUrl.child(0).child(1).child(0).text());
                 //分类
-                entity.setClassify(titleUrl.child(1).child(titleUrl.siblingIndex()-1).text()+""+titleUrl.child(1).child(titleUrl.siblingIndex()).text());
+//                entity.setCateId(titleUrl.child(1).child(titleUrl.siblingIndex()-1).text()+""+titleUrl.child(1).child(titleUrl.siblingIndex()).text());
                 //简介
-                entity.setDescription(doc.select(".book-intro").text().replaceAll(" ", "\r\n") + "\r\n");
-                //作品图片
-                //作品信息
-                //是否完结
-                entity.setOver(0);
-                //是否签约
-                entity.setSigned(0);
-                //是否收费
+                entity.setIntro(doc.select(".book-intro").text().replaceAll(" ", "\r\n") + "\r\n");
 
+                //作品信息
+                bookId = CommomUtil.numId();
+                entity.setBookId(bookId);
+                //是否完结
+                //是否签约
+                //是否收费
                 //评分
-                entity.setScore((float) 0.1);
                 //识别码
-                entity.setCode(CommomUtil.uuid());
+                entity.setUuid(CommomUtil.uuid());
                 //获取卷
-                entity.setNovelVolumes(crawlNovelVolumeList(doc));
+                entity.setVolumeInfos(crawlNovelVolumeList(doc));
             }
 
         }
@@ -181,10 +166,10 @@ public class NovelCrawlerServiceQiDianImpl implements NovelCrawlerService {
      * @return List<NovelDetails> 多个
      */
     @Override
-    public List<NovelDetails> crawlNovelDetailsList(Document doc) {
-        List<NovelDetails> list = null;
+    public List<BookInfo> crawlNovelDetailsList(Document doc) {
+        List<BookInfo> list = null;
         if (CommomUtil.isNotNull(doc)) {
-                list = new ArrayList<NovelDetails>();
+                list = new ArrayList<BookInfo>();
                 for (Element e : doc.select("")) {
                     list.add(crawlNovelDetails(Jsoup.parse(e.toString())));
                 }
@@ -201,27 +186,30 @@ public class NovelCrawlerServiceQiDianImpl implements NovelCrawlerService {
      * @date: 2018/11/9 22:40
      */
     @Override
-    public NovelVolume crawlNovelVolume(Document doc) {
-        NovelVolume entity = null;
+    public VolumeInfo crawlNovelVolume(Document doc) {
+        VolumeInfo entity = null;
         if (CommomUtil.isNotNull(doc)) {
-            entity = new NovelVolume();
+            entity = new VolumeInfo();
             Elements volumes = doc.select("h3");
             for (Element volume : volumes) {
                 String volumeName=volume.text().split("·")[0].split(" ")[volume.text().split("·")[0].split(" ").length-1];
                 if(volumeName!=null && volumeName.trim().length()!=0){
                     //第几卷
+                    entity.setVolumeNum(1);
                     //卷名称
-                    entity.setName(volumeName);
+                    entity.setVolumeName(volumeName);
                     //是否收费
-                    entity.setToll(0);
                     //卷字数
-//                    entity.setWordCnt(0);
+                    entity.setWordsCount(0);
                     //章数
 //                    entity.setChapteCnt(0);
+                    entity.setBookId(bookId);
+                    volumeId = CommomUtil.numId();
+                    entity.setVolumeId(volumeId);
                     //识别码
-                    entity.setCode(CommomUtil.uuid());
+                    entity.setUuid(CommomUtil.uuid());
                     //获取章节
-                    entity.setNovelChapterList(crawlNovelChapterList(doc));
+                    entity.setChapterInfos(crawlNovelChapterList(doc));
                 }
             }
         }
@@ -237,12 +225,16 @@ public class NovelCrawlerServiceQiDianImpl implements NovelCrawlerService {
      * @return List<NovelVolume> 多个
      */
     @Override
-    public List<NovelVolume> crawlNovelVolumeList(Document doc) {
-        List<NovelVolume> list = null;
+    public List<VolumeInfo> crawlNovelVolumeList(Document doc) {
+        List<VolumeInfo> list = null;
         if (CommomUtil.isNotNull(doc)) {
-            list = new ArrayList<NovelVolume>();
+            list = new ArrayList<VolumeInfo>();
+            int i=1;
             for (Element e : doc.select(".volume")) {
-                list.add(crawlNovelVolume(Jsoup.parse(e.toString())));
+                VolumeInfo v=crawlNovelVolume(Jsoup.parse(e.toString()));
+                v.setVolumeNum(i);
+                list.add(v);
+                i++;
             }
         }
         return list;
@@ -258,25 +250,28 @@ public class NovelCrawlerServiceQiDianImpl implements NovelCrawlerService {
      * @date: 2018/11/9 22:40
      */
     @Override
-    public NovelChapter crawlNovelChapter(Document doc) {
-        NovelChapter entity = null;
+    public ChapterInfo crawlNovelChapter(Document doc) {
+        ChapterInfo entity = null;
         if (CommomUtil.isNotNull(doc)) {
-            entity = new NovelChapter();
-                //第几章
+            entity = new ChapterInfo();
+
                 //章节名称
-//                entity.setName(doc.text());
+                entity.setChapterName(doc.text());
                 //章节url
                 String url= ReptileUtil.getUrl(doc);
                 //章节首发时间
-                entity.setPremiereDate(new Date());
-                //章节是否收费
-                entity.setToll(0);
-                //章节字数
-                entity.setWordCnt((long) 0);
+                entity.setUpdateTime(new Date());
+
+                entity.setVolumeId(volumeId);
+
                 //识别码
-                entity.setCode(CommomUtil.uuid());
+                entity.setUuid(CommomUtil.uuid());
+                String content=ReptileUtil.getContent(url);
                 //获取章节里的内容
-                entity.setNovelContent(crawlNovelContent(url));
+                entity.setContent(content.getBytes());
+                //章节字数
+                entity.setWordsCount((long) content.length());
+//                entity.setContent("".getBytes());
         }
         return entity;
     }
@@ -290,60 +285,40 @@ public class NovelCrawlerServiceQiDianImpl implements NovelCrawlerService {
      * @return List<NovelChapter> 多个
      */
     @Override
-    public List<NovelChapter> crawlNovelChapterList(Document doc) {
-        List<NovelChapter> list = null;
+    public List<ChapterInfo> crawlNovelChapterList(Document doc) {
+        List<ChapterInfo> list = null;
         if (CommomUtil.isNotNull(doc)) {
-            list = new ArrayList<NovelChapter>();
+            list = new ArrayList<ChapterInfo>();
+            int i=1;//章节序列
+            long prev=0;//上一章id
+            long next=0;
             for (Element e : doc.select(".cf li a")) {
-                list.add(crawlNovelChapter(Jsoup.parse(e.toString())));
+
+                ChapterInfo c=crawlNovelChapter(Jsoup.parse(e.toString()));
+
+                if(prev!=0){
+                    c.setPrev(prev);
+                }
+                if(next!=0){
+                    c.setChapterId(next);
+                }else{
+                    c.setChapterId(CommomUtil.numId());
+                }
+                next = CommomUtil.numId();
+                c.setNext(next);
+                prev=c.getChapterId();
+                //第几章
+                c.setChapterNum(i);
+                list.add(c);
+                i++;
             }
         }
+
         return list;
     }
 
 
-    /**
-     * TODO: 爬取小说内容信息
-     *
-     * @param doc Document类
-     * @return: NovelVolume 内容类
-     * @auther: vaie
-     * @date: 2018/11/9 22:40
-     */
-    @Override
-    public NovelContent crawlNovelContent(Document doc) {
-        NovelContent entity = null;
-        if (CommomUtil.isNotNull(doc)) {
-            Element content = doc.select(".j_readContent").get(0);//内容
-            entity = new NovelContent();
-            //第几章
-
-            //具体内容
-            entity.setContent((content.text().replaceAll(" ", "\r\n") + "\r\n").getBytes());
-            //上一章url
-            //下一章url
-            //识别码
-            entity.setCode(CommomUtil.uuid());
-        }
-        return entity;
-    }
 
 
-    /**
-     * TODO: 爬取小说内容信息
-     *
-     * @param doc Document类
-     * @return List<NovelChapter> 多个
-     */
-    @Override
-    public List<NovelContent> crawlNovelContentList(Document doc) {
-        List<NovelContent> list = null;
-        if (CommomUtil.isNotNull(doc)) {
-            list = new ArrayList<NovelContent>();
-            for (Element e : doc.select("")) {
-                list.add(crawlNovelContent(Jsoup.parse(e.toString())));
-            }
-        }
-        return list;
-    }
+
 }

@@ -1,0 +1,46 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: head(${title})">
+
+</head>
+<body style="background: #fff">
+<div class="container">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <!-- Links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/all">全部作品</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">期待</a>
+            </li>
+        </ul>
+    </nav>
+        <div style="height: 100px;"></div>
+        <div style="background: #F8F3E9; border: 1px solid #F0F0F0;" class="card-body" >
+            <div style="font: 16px/24px 宋体;">
+                <h1 th:text="${entity.chapterName}"></h1>
+            </div>
+            <div style="font: 16px/40px 微软雅黑; padding: 30px;" th:utext="${new String (entity.content).replaceAll( '\r\n','<p> <p>') }"></div>
+        </div>
+    <nav style="margin-top: 40px;margin-bottom: 40px; height: 80px;" class="font-weight-bold lead navbar navbar-expand-sm bg-light navbar-light">
+        <!-- Links -->
+        <ul class="navbar-nav text-center row col-12">
+            <li class="nav-item col-4">
+                <a class="nav-link" th:href="'/chapter/'+${entity.volumeId}+'/'+${entity.prev}">上一章</a>
+            </li>
+            <li class="nav-item  col-4">
+                <a class="nav-link" th:href="'/info/'+${bookId}">目录</a>
+            </li>
+            <li class="nav-item  col-4">
+                <a class="nav-link" th:href="'/chapter/'+${entity.volumeId}+'/'+${entity.next}">下一章</a>
+            </li>
+        </ul>
+    </nav>
+
+
+</div>
+<!--js导入-->
+<div th:replace="common/footer :: foot"></div>
+</body>
+</html>

@@ -4,6 +4,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 /*
@@ -20,6 +22,23 @@ public class CommomUtil {
     public static String uuid()
     {
         return UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+    /**
+     * 獲取10位uuid long形
+     * @return
+     */
+    public static long numId(){
+        boolean fiag=true;
+        long id=0;
+        while (fiag){
+            id = (long)(Math.random() * 10*900*900*900);
+            String sa=String.valueOf(id);
+            if(sa.length() == 10){
+                fiag=false;
+            }
+        }
+        return id ;
     }
 
     /**

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
+        "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
+<urlrewrite>
+    <!--全部作品 列表-->
+    <rule>
+        <!--拦截页面以/_开头的数据,作为转发给前端使用-->
+        <from>^/all$</from>
+        <!-- to: 真实的URL -->
+        <to type="forward">/novelUi/all.do</to>
+    </rule>
+    <!--信息页-->
+    <rule>
+        <!--拦截页面以/_开头的数据,作为转发给前端使用-->
+        <from>^/info/</from>
+        <!-- to: 真实的URL -->
+        <to type="forward">/novelUi/info.do?bookId=$2</to>
+    </rule>
+    <!--内容也-->
+    <rule>
+        <!--拦截页面以/_开头的数据,作为转发给前端使用-->
+        <from>^/chapter/(.*)/(.*)$</from>
+        <!-- to: 真实的URL -->
+        <to type="forward">/novelUi/chapter.do?volumeId=$1&amp;chapterId=$2</to>
+    </rule>
+
+</urlrewrite>

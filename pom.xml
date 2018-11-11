@@ -26,6 +26,13 @@
 
 
     <dependencies>
+        <!--伪静态jar-->
+        <dependency>
+            <groupId>org.tuckey</groupId>
+            <artifactId>urlrewritefilter</artifactId>
+            <version>4.0.4</version>
+        </dependency>
+
         <!--动态生成class-->
         <dependency>
             <groupId>com.itranswarp</groupId>

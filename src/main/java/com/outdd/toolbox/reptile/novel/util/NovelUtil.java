@@ -17,7 +17,7 @@ public class NovelUtil {
      * @auther: vaie
      * @date: 2018/11/10 12:48
      */
-    public static Integer chineseNumber2Int(String chineseNumber){
+    public static Integer chineseNumberInt(String chineseNumber){
         int result = 0;
         int temp = 1;//存放一个单位的数字如：十万
         int count = 0;//判断是否有chArr

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.outdd.toolbox.reptile.novel.dao.VolumeInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.outdd.toolbox.reptile.novel.pojo.VolumeInfo" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="volume_id" property="volumeId" jdbcType="BIGINT" />
+    <result column="volume_name" property="volumeName" jdbcType="VARCHAR" />
+    <result column="volume_num" property="volumeNum" jdbcType="INTEGER" />
+    <result column="book_id" property="bookId" jdbcType="BIGINT" />
+    <result column="total_volume" property="totalVolume" jdbcType="INTEGER" />
+    <result column="words_count" property="wordsCount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uuid, volume_id, volume_name, volume_num, book_id, total_volume, words_count
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from volume_info
+    where volume_id = #{volumeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from volume_info
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.outdd.toolbox.reptile.novel.pojo.VolumeInfo" >
+    insert into volume_info (uuid, volume_id, volume_name, 
+      volume_num, book_id, total_volume, 
+      words_count)
+    values (#{uuid,jdbcType=VARCHAR}, #{volumeId,jdbcType=BIGINT}, #{volumeName,jdbcType=VARCHAR}, 
+      #{volumeNum,jdbcType=INTEGER}, #{bookId,jdbcType=BIGINT}, #{totalVolume,jdbcType=INTEGER}, 
+      #{wordsCount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.VolumeInfo" >
+    insert into volume_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="volumeId != null" >
+        volume_id,
+      </if>
+      <if test="volumeName != null" >
+        volume_name,
+      </if>
+      <if test="volumeNum != null" >
+        volume_num,
+      </if>
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="totalVolume != null" >
+        total_volume,
+      </if>
+      <if test="wordsCount != null" >
+        words_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="volumeId != null" >
+        #{volumeId,jdbcType=BIGINT},
+      </if>
+      <if test="volumeName != null" >
+        #{volumeName,jdbcType=VARCHAR},
+      </if>
+      <if test="volumeNum != null" >
+        #{volumeNum,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=BIGINT},
+      </if>
+      <if test="totalVolume != null" >
+        #{totalVolume,jdbcType=INTEGER},
+      </if>
+      <if test="wordsCount != null" >
+        #{wordsCount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <!-- 批量插入生成的兑换码 -->
+  <insert id ="insertBatch" parameterType="java.util.List" >
+    insert into volume_info
+    (uuid, volume_id, volume_name, volume_num, book_id, words_count)
+    VALUES
+    <foreach collection ="list" item="pojo" index= "index" separator =",">
+
+      (#{pojo.uuid,jdbcType=VARCHAR},
+      #{pojo.volumeId,jdbcType=BIGINT},
+      #{pojo.volumeName,jdbcType=VARCHAR},
+      #{pojo.volumeNum,jdbcType=INTEGER},
+      #{pojo.bookId,jdbcType=BIGINT},
+      #{pojo.wordsCount,jdbcType=INTEGER})
+
+
+    </foreach >
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.VolumeInfo" >
+    update volume_info
+    <set >
+      <if test="volumeId != null" >
+        volume_id = #{volumeId,jdbcType=BIGINT},
+      </if>
+      <if test="volumeName != null" >
+        volume_name = #{volumeName,jdbcType=VARCHAR},
+      </if>
+      <if test="volumeNum != null" >
+        volume_num = #{volumeNum,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        book_id = #{bookId,jdbcType=BIGINT},
+      </if>
+      <if test="totalVolume != null" >
+        total_volume = #{totalVolume,jdbcType=INTEGER},
+      </if>
+      <if test="wordsCount != null" >
+        words_count = #{wordsCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.outdd.toolbox.reptile.novel.pojo.VolumeInfo" >
+    update volume_info
+    set volume_id = #{volumeId,jdbcType=BIGINT},
+      volume_name = #{volumeName,jdbcType=VARCHAR},
+      volume_num = #{volumeNum,jdbcType=INTEGER},
+      book_id = #{bookId,jdbcType=BIGINT},
+      total_volume = #{totalVolume,jdbcType=INTEGER},
+      words_count = #{wordsCount,jdbcType=INTEGER}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

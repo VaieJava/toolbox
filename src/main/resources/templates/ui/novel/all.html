@@ -1,0 +1,17 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: head(${title})">
+
+</head>
+<body>
+<div class="container">
+    <ul>
+        <li th:each="entity:${entitys}">
+            <a th:href="'info/'+${entity.bookId}" th:text="${entity.bookName}"></a>
+        </li>
+    </ul>
+</div>
+<!--js导入-->
+<div th:replace="common/footer :: foot"></div>
+</body>
+</html>

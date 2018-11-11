@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.outdd.toolbox.reptile.novel.dao.ChapterInfoMapper">
+    <resultMap id="BaseResultMap" type="com.outdd.toolbox.reptile.novel.pojo.ChapterInfo">
+        <id column="uuid" property="uuid" jdbcType="VARCHAR"/>
+        <result column="chapter_id" property="chapterId" jdbcType="BIGINT"/>
+        <result column="chapter_name" property="chapterName" jdbcType="VARCHAR"/>
+        <result column="next" property="next" jdbcType="BIGINT"/>
+        <result column="prev" property="prev" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="volume_id" property="volumeId" jdbcType="BIGINT"/>
+        <result column="words_count" property="wordsCount" jdbcType="BIGINT"/>
+        <result column="isFirst" property="isfirst" jdbcType="INTEGER"/>
+        <result column="chapter_num" property="chapterNum" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.outdd.toolbox.reptile.novel.pojo.ChapterInfo" extends="BaseResultMap">
+        <result column="content" property="content" jdbcType="LONGVARBINARY"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    uuid, chapter_id, chapter_name, next, prev, update_time, volume_id, words_count, 
+    isFirst, chapter_num
+  </sql>
+    <sql id="Blob_Column_List">
+    content
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from chapter_info
+        where uuid = #{uuid,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByEntity" resultMap="ResultMapWithBLOBs" parameterType="com.outdd.toolbox.reptile.novel.pojo.ChapterInfo">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from chapter_info
+        <where>
+            <if test="uuid != null">
+                and uuid = #{uuid,jdbcType=VARCHAR}
+            </if>
+            <if test="chapterId != null">
+                and chapter_id = #{chapterId,jdbcType=BIGINT}
+            </if>
+            <if test="chapterName != null">
+                and chapter_name = #{chapterName,jdbcType=VARCHAR}
+            </if>
+            <if test="next != null">
+                and next = #{next,jdbcType=BIGINT}
+            </if>
+            <if test="prev != null">
+                and prev = #{prev,jdbcType=BIGINT}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="volumeId != null">
+                and volume_id = #{volumeId,jdbcType=BIGINT}
+            </if>
+            <if test="wordsCount != null">
+                and #{wordsCount,jdbcType=BIGINT}
+            </if>
+            <if test="isfirst != null">
+                and isFirst = #{isfirst,jdbcType=INTEGER}
+            </if>
+            <if test="chapterNum != null">
+                and chapter_num = #{chapterNum,jdbcType=INTEGER}
+            </if>
+            <if test="content != null">
+                and content =  #{content,jdbcType=LONGVARBINARY}
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from chapter_info
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.outdd.toolbox.reptile.novel.pojo.ChapterInfo">
+    insert into chapter_info (uuid, chapter_id, chapter_name, 
+      next, prev, update_time, 
+      volume_id, words_count, isFirst, 
+      chapter_num, content)
+    values (#{uuid,jdbcType=VARCHAR}, #{chapterId,jdbcType=BIGINT}, #{chapterName,jdbcType=VARCHAR}, 
+      #{next,jdbcType=BIGINT}, #{prev,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP},
+      #{volumeId,jdbcType=BIGINT}, #{wordsCount,jdbcType=BIGINT}, #{isfirst,jdbcType=INTEGER}, 
+      #{chapterNum,jdbcType=INTEGER}, #{content,jdbcType=LONGVARBINARY})
+  </insert>
+    <insert id="insertSelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.ChapterInfo">
+        insert into chapter_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                uuid,
+            </if>
+            <if test="chapterId != null">
+                chapter_id,
+            </if>
+            <if test="chapterName != null">
+                chapter_name,
+            </if>
+            <if test="next != null">
+                next,
+            </if>
+            <if test="prev != null">
+                prev,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="volumeId != null">
+                volume_id,
+            </if>
+            <if test="wordsCount != null">
+                words_count,
+            </if>
+            <if test="isfirst != null">
+                isFirst,
+            </if>
+            <if test="chapterNum != null">
+                chapter_num,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="chapterId != null">
+                #{chapterId,jdbcType=BIGINT},
+            </if>
+            <if test="chapterName != null">
+                #{chapterName,jdbcType=VARCHAR},
+            </if>
+            <if test="next != null">
+                #{next,jdbcType=BIGINT},
+            </if>
+            <if test="prev != null">
+                #{prev,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="volumeId != null">
+                #{volumeId,jdbcType=BIGINT},
+            </if>
+            <if test="wordsCount != null">
+                #{wordsCount,jdbcType=BIGINT},
+            </if>
+            <if test="isfirst != null">
+                #{isfirst,jdbcType=INTEGER},
+            </if>
+            <if test="chapterNum != null">
+                #{chapterNum,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARBINARY},
+            </if>
+        </trim>
+    </insert>
+    <!-- 批量插入生成的兑换码 -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into chapter_info
+        (uuid, chapter_id, chapter_name,next,prev,update_time,
+        volume_id, words_count,chapter_num, content)
+        VALUES
+        <foreach collection="list" item="pojo" index="index" separator=",">
+
+           (#{pojo.uuid,jdbcType=VARCHAR},
+            #{pojo.chapterId,jdbcType=BIGINT},
+            #{pojo.chapterName,jdbcType=VARCHAR},
+            #{pojo.next,jdbcType=BIGINT},
+            #{pojo.prev,jdbcType=BIGINT},
+            #{pojo.updateTime,jdbcType=TIMESTAMP},
+            #{pojo.volumeId,jdbcType=BIGINT},
+            #{pojo.wordsCount,jdbcType=BIGINT},
+            #{pojo.chapterNum,jdbcType=INTEGER},
+            #{pojo.content,jdbcType=LONGVARBINARY})
+
+
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.ChapterInfo">
+        update chapter_info
+        <set>
+            <if test="chapterId != null">
+                chapter_id = #{chapterId,jdbcType=BIGINT},
+            </if>
+            <if test="chapterName != null">
+                chapter_name = #{chapterName,jdbcType=VARCHAR},
+            </if>
+            <if test="next != null">
+                next = #{next,jdbcType=BIGINT},
+            </if>
+            <if test="prev != null">
+                prev = #{prev,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="volumeId != null">
+                volume_id = #{volumeId,jdbcType=BIGINT},
+            </if>
+            <if test="wordsCount != null">
+                words_count = #{wordsCount,jdbcType=BIGINT},
+            </if>
+            <if test="isfirst != null">
+                isFirst = #{isfirst,jdbcType=INTEGER},
+            </if>
+            <if test="chapterNum != null">
+                chapter_num = #{chapterNum,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARBINARY},
+            </if>
+        </set>
+        where uuid = #{uuid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.outdd.toolbox.reptile.novel.pojo.ChapterInfo">
+    update chapter_info
+    set chapter_id = #{chapterId,jdbcType=BIGINT},
+      chapter_name = #{chapterName,jdbcType=VARCHAR},
+      next = #{next,jdbcType=BIGINT},
+      prev = #{prev,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      volume_id = #{volumeId,jdbcType=BIGINT},
+      words_count = #{wordsCount,jdbcType=BIGINT},
+      isFirst = #{isfirst,jdbcType=INTEGER},
+      chapter_num = #{chapterNum,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARBINARY}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.outdd.toolbox.reptile.novel.pojo.ChapterInfo">
+    update chapter_info
+    set chapter_id = #{chapterId,jdbcType=BIGINT},
+      chapter_name = #{chapterName,jdbcType=VARCHAR},
+      next = #{next,jdbcType=BIGINT},
+      prev = #{prev,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      volume_id = #{volumeId,jdbcType=BIGINT},
+      words_count = #{wordsCount,jdbcType=BIGINT},
+      isFirst = #{isfirst,jdbcType=INTEGER},
+      chapter_num = #{chapterNum,jdbcType=INTEGER}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

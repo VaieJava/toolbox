@@ -1,9 +1,8 @@
 package com.outdd.toolbox.reptile.novel.service;
 
-import com.outdd.toolbox.reptile.novel.pojo.NovelChapter;
-import com.outdd.toolbox.reptile.novel.pojo.NovelContent;
-import com.outdd.toolbox.reptile.novel.pojo.NovelDetails;
-import com.outdd.toolbox.reptile.novel.pojo.NovelVolume;
+import com.outdd.toolbox.reptile.novel.pojo.BookInfo;
+import com.outdd.toolbox.reptile.novel.pojo.ChapterInfo;
+import com.outdd.toolbox.reptile.novel.pojo.VolumeInfo;
 import org.jsoup.nodes.Document;
 
 import java.util.List;
@@ -20,28 +19,28 @@ public interface NovelCrawlerService {
      * @param url 网络地址
      * @return NovelDetails
      */
-    public NovelDetails crawlNovelDetails(String url);
+    public BookInfo crawlNovelDetails(String url);
 
     /**
      *TODO: 爬取小说详情信息
      * @param doc Document类
      * @return NovelDetails
      */
-    public NovelDetails crawlNovelDetails(Document doc);
+    public BookInfo crawlNovelDetails(Document doc);
 
     /**
      *TODO: 爬取小说详情信息
      * @param url 网络地址
      * @return List<NovelDetails> 多个
      */
-    public List<NovelDetails> crawlNovelDetailsList(String url);
+    public List<BookInfo> crawlNovelDetailsList(String url);
 
     /**
      *TODO: 爬取小说详情信息
      * @param doc Document类
      * @return List<NovelDetails> 多个
      */
-    public List<NovelDetails> crawlNovelDetailsList(Document doc);
+    public List<BookInfo> crawlNovelDetailsList(Document doc);
 
 
 
@@ -52,7 +51,7 @@ public interface NovelCrawlerService {
      * @auther: vaie
      * @date: 2018/11/9 22:40
      */
-    public NovelVolume crawlNovelVolume(String url);
+    public VolumeInfo crawlNovelVolume(String url);
 
     /**
      * TODO: 爬取小说卷信息
@@ -61,21 +60,21 @@ public interface NovelCrawlerService {
      * @auther: vaie
      * @date: 2018/11/9 22:40
      */
-    public NovelVolume crawlNovelVolume(Document doc);
+    public VolumeInfo crawlNovelVolume(Document doc);
 
     /**
      *TODO: 爬取小说卷信息
      * @param url 网络地址
      * @return List<NovelVolume> 多个
      */
-    public List<NovelVolume> crawlNovelVolumeList(String url);
+    public List<VolumeInfo> crawlNovelVolumeList(String url);
 
     /**
      *TODO: 爬取小说卷信息
      * @param doc Document类
      * @return List<NovelVolume> 多个
      */
-    public List<NovelVolume> crawlNovelVolumeList(Document doc);
+    public List<VolumeInfo> crawlNovelVolumeList(Document doc);
     /**
      * TODO: 爬取小说章节信息
      * @param url 网络地址
@@ -83,7 +82,7 @@ public interface NovelCrawlerService {
      * @auther: vaie
      * @date: 2018/11/9 22:40
      */
-    public NovelChapter crawlNovelChapter(String url);
+    public ChapterInfo crawlNovelChapter(String url);
 
     /**
      * TODO: 爬取小说章节信息
@@ -92,52 +91,20 @@ public interface NovelCrawlerService {
      * @auther: vaie
      * @date: 2018/11/9 22:40
      */
-    public NovelChapter crawlNovelChapter(Document doc);
+    public ChapterInfo crawlNovelChapter(Document doc);
 
     /**
      *TODO: 爬取小说章节信息
      * @param url 网络地址
      * @return List<NovelChapter> 多个
      */
-    public List<NovelChapter> crawlNovelChapterList(String url);
+    public List<ChapterInfo> crawlNovelChapterList(String url);
 
     /**
      *TODO: 爬取小说章节信息
      * @param doc Document类
      * @return List<NovelChapter> 多个
      */
-    public List<NovelChapter> crawlNovelChapterList(Document doc);
+    public List<ChapterInfo> crawlNovelChapterList(Document doc);
 
-    /**
-     * TODO: 爬取小说内容信息
-     * @param url 网络地址
-     * @return: NovelVolume 内容类
-     * @auther: vaie
-     * @date: 2018/11/9 22:40
-     */
-    public NovelContent crawlNovelContent(String url);
-
-    /**
-     * TODO: 爬取小说内容信息
-     * @param doc Document类
-     * @return: NovelVolume 内容类
-     * @auther: vaie
-     * @date: 2018/11/9 22:40
-     */
-    public NovelContent crawlNovelContent(Document doc);
-
-
-    /**
-     *TODO: 爬取小说内容信息
-     * @param url 网络地址
-     * @return List<NovelChapter> 多个
-     */
-    public List<NovelContent> crawlNovelContentList(String url);
-
-    /**
-     *TODO: 爬取小说内容信息
-     * @param doc Document类
-     * @return List<NovelChapter> 多个
-     */
-    public List<NovelContent> crawlNovelContentList(Document doc);
 }

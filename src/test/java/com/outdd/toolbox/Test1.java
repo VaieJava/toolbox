@@ -1,9 +1,11 @@
 package com.outdd.toolbox;
 
+import com.alibaba.fastjson.JSONObject;
+import com.outdd.toolbox.common.util.CommomUtil;
 import com.outdd.toolbox.common.util.io.NovelIo;
-import com.outdd.toolbox.reptile.novel.pojo.NovelChapter;
-import com.outdd.toolbox.reptile.novel.pojo.NovelDetails;
-import com.outdd.toolbox.reptile.novel.pojo.NovelVolume;
+import com.outdd.toolbox.reptile.novel.pojo.BookInfo;
+import com.outdd.toolbox.reptile.novel.pojo.ChapterInfo;
+import com.outdd.toolbox.reptile.novel.pojo.VolumeInfo;
 import com.outdd.toolbox.reptile.novel.service.NovelCrawlerService;
 import com.outdd.toolbox.reptile.novel.service.NovelService;
 import com.outdd.toolbox.reptile.novel.service.impl.NovelCrawlerServiceQiDianImpl;
@@ -32,23 +34,23 @@ public class Test1 {
     public void test2(){
         NovelCrawlerService ncs=new NovelCrawlerServiceQiDianImpl();
 
-        NovelDetails nd=ncs.crawlNovelDetails("https://book.qidian.com/info/1010734492");
+        BookInfo bi=ncs.crawlNovelDetails("https://book.qidian.com/info/1011646859");
         StringBuilder sb = new StringBuilder();
-        sb.append(nd.getTitle()+"\r\n");
-        for(NovelVolume nv:nd.getNovelVolumes()){
-            sb.append(nv.getName()+"\r\n");
-            for(NovelChapter nc:nv.getNovelChapterList()){
-                sb.append(nc.getName()+"\r\n");
-                sb.append(new String(nc.getNovelContent().getContent())+"\n\r");
+        sb.append(bi.getBookName()+"\r\n");
+        for(VolumeInfo vi:bi.getVolumeInfos()){
+            sb.append(vi.getVolumeName()+"\r\n");
+            for(ChapterInfo ci:vi.getChapterInfos()){
+                sb.append(ci.getChapterName()+"\r\n");
+                sb.append(new String(ci.getContent())+"\n\r");
             }
         }
         NovelIo no=new NovelIo();
 //        System.out.println(sb.toString());
-        no.write(sb.toString(),nd.getTitle()+"_"+nd.getAuthor());
+        System.out.println(JSONObject.toJSON(bi));
+//        no.write(sb.toString(),bi.getBookName()+"_"+bi.getAuthor());
     }
     @Test
     public void test3(){
-        System.out.println(NovelUtil.chineseNumber2Int("一"));
 
     }
 }

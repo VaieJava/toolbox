@@ -5,8 +5,9 @@ package com.outdd.toolbox.ui.novel.controller;/*
  * @version v1.0
  */
 
-import com.outdd.toolbox.reptile.novel.pojo.NovelDetails;
-import com.outdd.toolbox.reptile.novel.pojo.NovelVolume;
+import com.outdd.toolbox.common.util.CommomUtil;
+import com.outdd.toolbox.reptile.novel.pojo.BookInfo;
+import com.outdd.toolbox.reptile.novel.pojo.ChapterInfo;
 import com.outdd.toolbox.ui.novel.service.NovelServiceUi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,19 +24,40 @@ public class NovelControllerUi {
     @Autowired
     NovelServiceUi novelServiceUi;
 
+    @RequestMapping("all")
+    public String all(ModelMap mo){
+
+        mo.put("entitys",novelServiceUi.getBookInfo(new BookInfo()));
+        mo.put("title","全部小说");
+        return site+"all";
+    }
     /**
      * 返回小说信息页面
      * @return
      */
     @RequestMapping("info")
-    public String info (ModelMap mo){
+    public String info (String bookId, ModelMap mo){
+        if(CommomUtil.isNotNull(bookId)){
+            BookInfo bi=novelServiceUi.getBookInfo(bookId);
+            mo.put("entity",bi);
+            mo.put("title",bi.getBookName());
+        }
 
-        NovelDetails nd=novelServiceUi.getNovelInfo("ee1f56cafc064ff89a1efe58ff753379");
-        List<NovelVolume> nvList=novelServiceUi.getNovelVolume(nd.getCode());
-        mo.put("title",nd.getTitle()+"_"+nd.getAuthor()+"_"+nd.getClassify());
-
-        mo.put("entity",nd);
-        mo.put("volumeList",nvList);
         return site+"info";
+    }
+    /**
+     * 返回小说信息页面
+     * @return
+     */
+    @RequestMapping("chapter")
+    public String chapter (String volumeId,String chapterId,ModelMap mo){
+        if(CommomUtil.isNotNull(volumeId)&&CommomUtil.isNotNull(chapterId)){
+            ChapterInfo ci=novelServiceUi.getChapter(volumeId,chapterId);
+            Long bookId = novelServiceUi.getVolumeInfo(volumeId).getBookId();
+            mo.put("entity",ci);
+            mo.put("bookId",bookId);
+            mo.put("title",ci.getChapterName());
+        }
+        return site+"chapter";
     }
 }

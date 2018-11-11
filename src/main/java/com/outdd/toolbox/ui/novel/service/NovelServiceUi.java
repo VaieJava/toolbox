@@ -5,13 +5,18 @@ package com.outdd.toolbox.ui.novel.service;/*
  * @version v1.0
  */
 
-import com.outdd.toolbox.reptile.novel.pojo.NovelDetails;
-import com.outdd.toolbox.reptile.novel.pojo.NovelVolume;
+import com.outdd.toolbox.reptile.novel.pojo.BookInfo;
+import com.outdd.toolbox.reptile.novel.pojo.ChapterInfo;
+import com.outdd.toolbox.reptile.novel.pojo.VolumeInfo;
 
 import java.util.List;
 
 public interface NovelServiceUi {
-    public NovelDetails getNovelInfo(String id);
+    public BookInfo getBookInfo(String id);
 
-    public List<NovelVolume> getNovelVolume(String id);
+    public List<BookInfo> getBookInfo(BookInfo book);
+
+    public VolumeInfo getVolumeInfo(String bookId);
+
+    public ChapterInfo getChapter(String volumeId,String chapterId);
 }

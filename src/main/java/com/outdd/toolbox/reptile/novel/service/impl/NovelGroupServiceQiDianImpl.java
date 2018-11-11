@@ -1,10 +1,18 @@
 package com.outdd.toolbox.reptile.novel.service.impl;
 
+import com.outdd.toolbox.reptile.novel.dao.BookInfoMapper;
+import com.outdd.toolbox.reptile.novel.dao.ChapterInfoMapper;
+import com.outdd.toolbox.reptile.novel.dao.VolumeInfoMapper;
+import com.outdd.toolbox.reptile.novel.pojo.BookInfo;
+import com.outdd.toolbox.reptile.novel.pojo.VolumeInfo;
 import com.outdd.toolbox.reptile.novel.service.NovelCrawlerService;
 import com.outdd.toolbox.reptile.novel.service.NovelGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 /*
  * TODO: 组合小说
@@ -17,6 +25,12 @@ public class NovelGroupServiceQiDianImpl implements NovelGroupService {
     @Autowired
     @Qualifier("novelCrawlerServiceQiDianImpl")
     NovelCrawlerService novelCrawlerService;
+    @Resource
+    BookInfoMapper bookInfoMapper;
+    @Resource
+    VolumeInfoMapper volumeInfoMapper;
+    @Resource
+    ChapterInfoMapper chapterInfoMapper;
     /**
      * TODO:新增一本小说
      *
@@ -24,7 +38,18 @@ public class NovelGroupServiceQiDianImpl implements NovelGroupService {
      * @return
      */
     @Override
+    @Transactional
     public boolean insetNovel(String url) {
+
+
+            BookInfo bookInfo=novelCrawlerService.crawlNovelDetails(url);
+            bookInfoMapper.insert(bookInfo);
+            volumeInfoMapper.insertBatch(bookInfo.getVolumeInfos());
+            for(VolumeInfo vi:bookInfo.getVolumeInfos()){
+                chapterInfoMapper.insertBatch(vi.getChapterInfos());
+            }
         return false;
-    }
+        }
+
+
 }

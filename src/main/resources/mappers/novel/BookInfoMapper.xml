@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.outdd.toolbox.reptile.novel.dao.BookInfoMapper" >
+  <resultMap id="BaseResultMapTwo" type="com.outdd.toolbox.reptile.novel.pojo.BookInfo" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="book_id" property="bookId" jdbcType="BIGINT" />
+    <result column="book_name" property="bookName" jdbcType="VARCHAR" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="cate_id" property="cateId" jdbcType="INTEGER" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="BaseResultMap" type="com.outdd.toolbox.reptile.novel.pojo.BookInfo" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="book_id" property="bookId" jdbcType="BIGINT" />
+    <result column="book_name" property="bookName" jdbcType="VARCHAR" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="cate_id" property="cateId" jdbcType="INTEGER" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <collection property="volumeInfos" ofType="com.outdd.toolbox.reptile.novel.pojo.VolumeInfo"
+                 select="getVolumeInfos"
+                column="book_id">
+    </collection>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.outdd.toolbox.reptile.novel.pojo.BookInfo" extends="BaseResultMap" >
+    <result column="book_img" property="bookImg" jdbcType="LONGVARBINARY" />
+  </resultMap>
+
+  <resultMap id="VolumeInfos" type="com.outdd.toolbox.reptile.novel.pojo.VolumeInfo" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="volume_id" property="volumeId" jdbcType="BIGINT" />
+    <result column="volume_name" property="volumeName" jdbcType="VARCHAR" />
+    <result column="volume_num" property="volumeNum" jdbcType="INTEGER" />
+    <result column="book_id" property="bookId" jdbcType="BIGINT" />
+    <result column="total_volume" property="totalVolume" jdbcType="INTEGER" />
+    <result column="words_count" property="wordsCount" jdbcType="INTEGER" />
+    <collection property="chapterInfos" ofType="com.outdd.toolbox.reptile.novel.pojo.ChapterInfo"
+                select="getChapterInfos"
+                column="volume_id">
+    </collection>
+  </resultMap>
+
+  <resultMap id="ChapterInfos" type="com.outdd.toolbox.reptile.novel.pojo.ChapterInfo">
+    <id column="uuid" property="uuid" jdbcType="VARCHAR"/>
+    <result column="chapter_id" property="chapterId" jdbcType="BIGINT"/>
+    <result column="chapter_name" property="chapterName" jdbcType="VARCHAR"/>
+    <result column="next" property="next" jdbcType="BIGINT"/>
+    <result column="prev" property="prev" jdbcType="BIGINT"/>
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    <result column="volume_id" property="volumeId" jdbcType="BIGINT"/>
+    <result column="words_count" property="wordsCount" jdbcType="BIGINT"/>
+    <result column="isFirst" property="isfirst" jdbcType="INTEGER"/>
+    <result column="chapter_num" property="chapterNum" jdbcType="INTEGER"/>
+    <result column="content" property="content" jdbcType="LONGVARBINARY"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uuid, book_id, book_name, intro, cate_id, author
+  </sql>
+  <sql id="Blob_Column_List" >
+    book_img
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from book_info
+    where book_id = #{bookId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByEntity" resultMap="BaseResultMapTwo" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from book_info
+    <where>
+      <if test="uuid != null">
+        and uuid = #{uuid,jdbcType=VARCHAR}
+      </if>
+      <if test="bookId != null" >
+        and book_id = #{bookId,jdbcType=BIGINT},
+      </if>
+      <if test="bookName != null" >
+        and book_name = #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null" >
+        and intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="cateId != null" >
+        and cate_id = #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="author != null" >
+        and author = #{author,jdbcType=VARCHAR},
+      </if>
+    </where>
+  </select>
+
+  <select id="getVolumeInfos" parameterType="java.lang.String" resultMap="VolumeInfos">
+    select
+    uuid, volume_id, volume_name, volume_num, book_id, total_volume, words_count
+    from volume_info
+    where book_id = #{book_id,jdbcType=VARCHAR} ORDER BY volume_num
+   </select>
+
+  <select id="getChapterInfos" parameterType="java.lang.String" resultMap="ChapterInfos">
+    select
+    uuid, chapter_id, chapter_name, next, prev, update_time, volume_id, words_count,
+    isFirst, chapter_num
+    from chapter_info
+    where volume_id = #{volume_id,jdbcType=VARCHAR} ORDER BY chapter_num
+   </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from book_info
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.outdd.toolbox.reptile.novel.pojo.BookInfo" >
+    insert into book_info (uuid, book_id, book_name, 
+      intro, cate_id, author, 
+      book_img)
+    values (#{uuid,jdbcType=VARCHAR}, #{bookId,jdbcType=BIGINT}, #{bookName,jdbcType=VARCHAR}, 
+      #{intro,jdbcType=VARCHAR}, #{cateId,jdbcType=INTEGER}, #{author,jdbcType=VARCHAR}, 
+      #{bookImg,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.BookInfo" >
+    insert into book_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="bookName != null" >
+        book_name,
+      </if>
+      <if test="intro != null" >
+        intro,
+      </if>
+      <if test="cateId != null" >
+        cate_id,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="bookImg != null" >
+        book_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=BIGINT},
+      </if>
+      <if test="bookName != null" >
+        #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null" >
+        #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="cateId != null" >
+        #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="bookImg != null" >
+        #{bookImg,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.BookInfo" >
+    update book_info
+    <set >
+      <if test="bookId != null" >
+        book_id = #{bookId,jdbcType=BIGINT},
+      </if>
+      <if test="bookName != null" >
+        book_name = #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null" >
+        intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="cateId != null" >
+        cate_id = #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="bookImg != null" >
+        book_img = #{bookImg,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.outdd.toolbox.reptile.novel.pojo.BookInfo" >
+    update book_info
+    set book_id = #{bookId,jdbcType=BIGINT},
+      book_name = #{bookName,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=VARCHAR},
+      cate_id = #{cateId,jdbcType=INTEGER},
+      author = #{author,jdbcType=VARCHAR},
+      book_img = #{bookImg,jdbcType=LONGVARBINARY}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.outdd.toolbox.reptile.novel.pojo.BookInfo" >
+    update book_info
+    set book_id = #{bookId,jdbcType=BIGINT},
+      book_name = #{bookName,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=VARCHAR},
+      cate_id = #{cateId,jdbcType=INTEGER},
+      author = #{author,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

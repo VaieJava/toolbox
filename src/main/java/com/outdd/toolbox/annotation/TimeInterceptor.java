@@ -31,7 +31,7 @@ public class TimeInterceptor {
      * &lt;功能详细描述&gt;
      * @see [类、类#方法、类#成员]
      */
-    @Pointcut("execution(* com.outdd.toolbox.excel..*.*(..))")
+    @Pointcut("execution(* com.outdd.toolbox.reptile..*.*(..))!execution(* com.outdd.toolbox.ToolboxApplication.*(..)) ")
     private void pointCutMethod() {
     }
 
