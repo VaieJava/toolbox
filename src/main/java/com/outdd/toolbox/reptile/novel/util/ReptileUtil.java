@@ -5,11 +5,13 @@ import com.outdd.toolbox.common.util.HttpUtils;
 import com.outdd.toolbox.common.util.io.NovelIo;
 import lombok.Data;
 import org.apache.http.protocol.RequestTargetHost;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,7 +64,9 @@ public class ReptileUtil {
     public static Document getDocumentOfHttps(String url) {
         Document document = null;
         try {
-            document = httpUtils.executeGetWithSSLAsDocument(url);
+//            document = Jsoup.parse(new URL(url).openStream(), "GBK", url);
+            document =httpUtils.executeGetWithSSLAsDocument(url);
+//            Jsoup.parse(new URL(url).openStream(), "GBK", url);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,8 +88,7 @@ public class ReptileUtil {
     }
 
     public static String getUrl(Document doc){
-
-        return  "https:" + doc.select("a").get(0).attr("href");
+        return  doc.select("a").get(0).attr("href");
     }
 
 
@@ -140,11 +143,11 @@ public class ReptileUtil {
      * @auther: vaie
      * @date: 2018/11/9 22:40
      */
-    public static String getContent(Document doc) {
+    public static String getContent(Document doc,String Rule) {
         String content="";
         if (CommomUtil.isNotNull(doc)) {
             try {
-                Element contents = doc.select(".j_readContent").get(0);//内容
+                Element contents = doc.select(Rule).get(0);//内容
                 content=(contents.text().replaceAll(" ", "\r\n") + "\r\n");
             }catch (Exception e){
 
@@ -161,9 +164,9 @@ public class ReptileUtil {
      * @auther: vaie
      * @date: 2018/11/9 22:40
      */
-    public static String getContent(String  url) {
+    public static String getContent(String  url,String Rule) {
 
-        return getContent(ReptileUtil.getDocumentOfHttps(url));
+        return getContent(ReptileUtil.getDocumentOfHttps(url),Rule);
     }
 
     /**

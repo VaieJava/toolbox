@@ -6,14 +6,19 @@ import com.outdd.toolbox.common.util.io.NovelIo;
 import com.outdd.toolbox.reptile.novel.pojo.BookInfo;
 import com.outdd.toolbox.reptile.novel.pojo.ChapterInfo;
 import com.outdd.toolbox.reptile.novel.pojo.VolumeInfo;
-import com.outdd.toolbox.reptile.novel.service.NovelCrawlerService;
+import com.outdd.toolbox.reptile.novel.service.CrawlerService;
 import com.outdd.toolbox.reptile.novel.service.NovelService;
-import com.outdd.toolbox.reptile.novel.service.impl.NovelCrawlerServiceQiDianImpl;
+import com.outdd.toolbox.reptile.novel.service.impl.BookCrawlerServiceImpl;
 import com.outdd.toolbox.reptile.novel.service.impl.NovelServiceImplTwo;
 import com.outdd.toolbox.reptile.novel.util.NovelUtil;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 public class Test1 {
+    @Autowired
+//    @Qualifier("bookCrawlerServiceImpl")
+    CrawlerService<BookInfo> crawlerService = new BookCrawlerServiceImpl();
     String url="https://www.qidian.com/finish?action=hidden&orderId=&page=1&vip=0&style=1&pageSize=20&siteid=1&pubflag=0&hiddenField=2";
     @Test
     public void test1(){
@@ -32,25 +37,14 @@ public class Test1 {
 
     @Test
     public void test2(){
-        NovelCrawlerService ncs=new NovelCrawlerServiceQiDianImpl();
-
-        BookInfo bi=ncs.crawlNovelDetails("https://book.qidian.com/info/1011646859");
-        StringBuilder sb = new StringBuilder();
-        sb.append(bi.getBookName()+"\r\n");
-        for(VolumeInfo vi:bi.getVolumeInfos()){
-            sb.append(vi.getVolumeName()+"\r\n");
-            for(ChapterInfo ci:vi.getChapterInfos()){
-                sb.append(ci.getChapterName()+"\r\n");
-                sb.append(new String(ci.getContent())+"\n\r");
-            }
-        }
-        NovelIo no=new NovelIo();
-//        System.out.println(sb.toString());
-        System.out.println(JSONObject.toJSON(bi));
-//        no.write(sb.toString(),bi.getBookName()+"_"+bi.getAuthor());
+        NovelService z=new NovelServiceImplTwo();
+       String d= z.getNovelByOne("https://www.xbiquge6.com/84_84032/","sad");
+        System.out.println(d);
     }
     @Test
     public void test3(){
-
+//        BookInfo bookInfo=crawlerService.crawlInfo("https://book.qidian.com/info/2594975");
+//        BookInfo bookInfo=crawlerService.crawlInfo("https://www.xbiquge6.com/84_84237/");
+        System.out.println(CommomUtil.numId());
     }
 }

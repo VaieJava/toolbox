@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.outdd.toolbox.reptile.novel.dao.CategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.outdd.toolbox.reptile.novel.pojo.Category" >
+    <id column="cate_id" property="cateId" jdbcType="INTEGER" />
+    <result column="sub_cate_id" property="subCateId" jdbcType="INTEGER" />
+    <result column="cate_name_cn" property="cateNameCn" jdbcType="VARCHAR" />
+    <result column="cate_name_en" property="cateNameEn" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cate_id, sub_cate_id, cate_name_cn, cate_name_en
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from category
+    where cate_id = #{cateId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from category
+    where cate_id = #{cateId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.outdd.toolbox.reptile.novel.pojo.Category" >
+    insert into category (cate_id, sub_cate_id, cate_name_cn, 
+      cate_name_en)
+    values (#{cateId,jdbcType=INTEGER}, #{subCateId,jdbcType=INTEGER}, #{cateNameCn,jdbcType=VARCHAR}, 
+      #{cateNameEn,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.Category" >
+    insert into category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cateId != null" >
+        cate_id,
+      </if>
+      <if test="subCateId != null" >
+        sub_cate_id,
+      </if>
+      <if test="cateNameCn != null" >
+        cate_name_cn,
+      </if>
+      <if test="cateNameEn != null" >
+        cate_name_en,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cateId != null" >
+        #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="subCateId != null" >
+        #{subCateId,jdbcType=INTEGER},
+      </if>
+      <if test="cateNameCn != null" >
+        #{cateNameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="cateNameEn != null" >
+        #{cateNameEn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.outdd.toolbox.reptile.novel.pojo.Category" >
+    update category
+    <set >
+      <if test="subCateId != null" >
+        sub_cate_id = #{subCateId,jdbcType=INTEGER},
+      </if>
+      <if test="cateNameCn != null" >
+        cate_name_cn = #{cateNameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="cateNameEn != null" >
+        cate_name_en = #{cateNameEn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cate_id = #{cateId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.outdd.toolbox.reptile.novel.pojo.Category" >
+    update category
+    set sub_cate_id = #{subCateId,jdbcType=INTEGER},
+      cate_name_cn = #{cateNameCn,jdbcType=VARCHAR},
+      cate_name_en = #{cateNameEn,jdbcType=VARCHAR}
+    where cate_id = #{cateId,jdbcType=INTEGER}
+  </update>
+</mapper>

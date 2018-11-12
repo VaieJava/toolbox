@@ -1,11 +1,12 @@
 package com.outdd.toolbox.reptile.novel.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.outdd.toolbox.reptile.novel.dao.BookInfoMapper;
 import com.outdd.toolbox.reptile.novel.dao.ChapterInfoMapper;
 import com.outdd.toolbox.reptile.novel.dao.VolumeInfoMapper;
 import com.outdd.toolbox.reptile.novel.pojo.BookInfo;
 import com.outdd.toolbox.reptile.novel.pojo.VolumeInfo;
-import com.outdd.toolbox.reptile.novel.service.NovelCrawlerService;
+import com.outdd.toolbox.reptile.novel.service.CrawlerService;
 import com.outdd.toolbox.reptile.novel.service.NovelGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,8 +24,8 @@ import javax.annotation.Resource;
 @Service
 public class NovelGroupServiceQiDianImpl implements NovelGroupService {
     @Autowired
-    @Qualifier("novelCrawlerServiceQiDianImpl")
-    NovelCrawlerService novelCrawlerService;
+    @Qualifier("bookCrawlerServiceImpl")
+    CrawlerService<BookInfo> crawlerService;
     @Resource
     BookInfoMapper bookInfoMapper;
     @Resource
@@ -42,7 +43,9 @@ public class NovelGroupServiceQiDianImpl implements NovelGroupService {
     public boolean insetNovel(String url) {
 
 
-            BookInfo bookInfo=novelCrawlerService.crawlNovelDetails(url);
+            BookInfo bookInfo=crawlerService.crawlInfo(url);
+//            String aa=JSONObject.toJSON(bookInfo).toString();
+//            System.out.println(aa);
             bookInfoMapper.insert(bookInfo);
             volumeInfoMapper.insertBatch(bookInfo.getVolumeInfos());
             for(VolumeInfo vi:bookInfo.getVolumeInfos()){

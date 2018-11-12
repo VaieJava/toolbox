@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.*;
 
 public class NovelServiceImplTwo implements NovelService {
- String directoryRule = ".listmain dl dd a";
+ String directoryRule = "#list dl dd a";
  String titleRule=".content h1";
  String contentsRule="#content";
  @Autowired

@@ -1,10 +1,4 @@
-package com.outdd.toolbox.ui.novel.controller;/*
- * TODO: 小说前端显示
- * @author VAIE
- * @date: 2018/11/9-15:28
- * @version v1.0
- */
-
+package com.outdd.toolbox.ui.novel.controller;
 import com.outdd.toolbox.common.util.CommomUtil;
 import com.outdd.toolbox.reptile.novel.pojo.BookInfo;
 import com.outdd.toolbox.reptile.novel.pojo.ChapterInfo;
@@ -16,6 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+/*
+ * TODO: 小说前端显示
+ * @author VAIE
+ * @date: 2018/11/9-15:28
+ * @version v1.0
+ */
 @Controller
 @RequestMapping("/novelUi/")
 public class NovelControllerUi {
