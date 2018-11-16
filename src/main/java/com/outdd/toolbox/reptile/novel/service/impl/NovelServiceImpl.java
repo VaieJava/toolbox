@@ -3,12 +3,14 @@ package com.outdd.toolbox.reptile.novel.service.impl;
 
 
 import com.outdd.toolbox.reptile.novel.pojo.NovelAssist;
+import com.outdd.toolbox.reptile.novel.service.NovelGroupService;
 import com.outdd.toolbox.reptile.novel.service.NovelService;
 import com.outdd.toolbox.reptile.novel.thread.GetDirectoryToIoThread;
 import com.outdd.toolbox.reptile.novel.thread.GetDirectoryToQueueThread;
 import com.outdd.toolbox.reptile.novel.thread.GetNovelListThread;
 import com.outdd.toolbox.reptile.novel.util.ReptileUtil;
 import org.jsoup.nodes.Document;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
@@ -18,6 +20,9 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @Service
 public class NovelServiceImpl implements NovelService {
+
+    @Autowired
+    NovelGroupService novelGroupService;
 
     ExecutorService es =Executors.newCachedThreadPool();//线程池
 
@@ -29,7 +34,7 @@ public class NovelServiceImpl implements NovelService {
 
     @Override
     public void getNovelByAll(String url) {
-        int xiet = 4;
+        int xiet = 20;
 
         CountDownLatch latch = new CountDownLatch(xiet);//两个工人的协作
         ReentrantReadWriteLock listRwl = new ReentrantReadWriteLock();
@@ -43,16 +48,19 @@ public class NovelServiceImpl implements NovelService {
         novelAssist.setNovelList(NovelList);
         novelAssist.setListRwl(listRwl);
         novelAssist.setDirectoryRwl(directoryRwl);
-        novelAssist.setListRule(".cf li .book-mid-info h4 a");
-        novelAssist.setNextRule(".lbf-pagination-next");
+        novelAssist.setListRule(".odd a");
+        novelAssist.setNextRule(".next");
         novelAssist.setDirectoryRule(directoryRule);
         novelAssist.setTitleRule(titleRule);
         novelAssist.setContentsRule(contentsRule);
 
         es.submit(new GetNovelListThread(novelAssist));
-        es.submit(new GetDirectoryToQueueThread(novelAssist));
-        es.submit(new GetDirectoryToQueueThread(novelAssist));
-        es.submit(new GetDirectoryToIoThread(novelAssist));
+        for(int i=0;i<xiet-1;i++){
+            es.submit(new GetDirectoryToQueueThread(novelAssist,novelGroupService));
+        }
+
+//        es.submit(new GetDirectoryToQueueThread(novelAssist));
+//        es.submit(new GetDirectoryToIoThread(novelAssist));
 //        try {
 //            latch.await();
 //        } catch (InterruptedException e) {

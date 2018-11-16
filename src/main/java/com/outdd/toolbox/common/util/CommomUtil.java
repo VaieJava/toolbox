@@ -1,5 +1,8 @@
 package com.outdd.toolbox.common.util;
 
+import com.github.pagehelper.PageInfo;
+import org.apache.poi.ss.formula.functions.T;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -120,5 +123,67 @@ public class CommomUtil {
         System.out.println(params);
         System.out.println(host);
         System.out.println(port);
+    }
+
+    public static String getPageDiv(PageInfo page){
+
+
+        StringBuilder sb = new StringBuilder();
+
+        if (page.isIsFirstPage()) {// 如果是首页
+            sb.append("<li class=\"lbf-pagination-item\"><a class=\"lbf-pagination-prev lbf-pagination-disabled\" href=\"#\"><</a></li>\n");
+        } else {
+            sb.append("<li class=\"lbf-pagination-item\"><a class=\"lbf-pagination-prev\" href=\"/all?pageNum="+(page.getPageNum()-1)+"\"><</a></li>\n");
+        }
+
+        if (page.getPageNum() > page.getNavigateFirstPage()) {
+            int i = 0;
+            for (i = page.getNavigateFirstPage(); i < page.getNavigateFirstPage() + 5 && i < page.getPageNum(); i++) {
+                sb.append("<li><a href=\"/all?pageNum="+(i + 1 - page.getNavigateFirstPage())+"\">"
+                        + (i + 1 - page.getNavigateFirstPage()) + "</a></li>\n");
+            }
+            if (i < page.getPageNum()) {
+                sb.append("<li class=\"disabled\"><a href=\"javascript:\">...</a></li>\n");
+            }
+        }
+
+        for(int i=page.getPageNum();i<=page.getPages() ;i++){
+            if(i == page.getPageNum()){
+                sb.append("<li class=\"lbf-pagination-item\"><a class=\"lbf-pagination-page  lbf-pagination-current\" href=\"#\">"+i+"</a></li>\n");
+            }else{
+                sb.append("<li class=\"lbf-pagination-item\"><a class=\"lbf-pagination-page\" href=\"/all?pageNum="+i+"\">"+i+"</a></li>\n");
+            }
+
+        }
+
+        if (page.getNavigateLastPage() - page.getPages() > 5) {
+            sb.append("<li class=\"disabled\"><a href=\"#\">...</a></li>\n");
+            page.setPages(page.getNavigateLastPage() - page.getPages());
+        }
+
+        for (int i = page.getPages() + 1; i <= page.getNavigateLastPage(); i++) {
+            sb.append("<li><a href=\"\">"
+                    + (i + 1 - page.getNavigateFirstPage()) + "</a></li>\n");
+        }
+
+
+        if (page.isIsLastPage()) {// 如果是末页
+            sb.append("<li class=\"lbf-pagination-item\"><a class=\"lbf-pagination-prev lbf-pagination-disabled\" href=\"javascript:\">></a></li>\n");
+        } else {
+            sb.append("<li class=\"lbf-pagination-item\"><a class=\"lbf-pagination-next \" href=\"/all?pageNum="+(page.getPageNum()+1)+"\">></a></li>\n");
+        }
+
+
+
+        sb.insert(0,"<ul class=\"lbf-pagination-item-list\">\n").append("</ul>\n");
+
+        sb.append("<div class=\"lbf-pagination-jump\"><input type=\"text\" id=\"PAGINATION-INPUT\" class=\"lbf-pagination-input\" value=\""+page.getPageNum()+"\"/>");
+        sb.append("<a href=\"#\" class=\"lbf-pagination-go\" id=\"PAGINATION-BUTTON\">GO</a></div>");
+
+		sb.insert(0,"<div class=\"lbf-pagination\">\n").append("</div>\n");
+
+
+        return sb.toString();
+
     }
 }

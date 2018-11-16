@@ -1,43 +1,228 @@
 <!DOCTYPE>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="common/header :: head(${title})">
-
-</head>
-<body style="background: #fff">
-<div class="container">
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <!-- Links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="/all">全部作品</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">期待</a>
-            </li>
-        </ul>
-    </nav>
-        <div style="height: 100px;"></div>
-        <div style="background: #F8F3E9; border: 1px solid #F0F0F0;" class="card-body" >
-            <div style="font: 16px/24px 宋体;">
-                <h1 th:text="${entity.chapterName}"></h1>
+<head th:replace="common/header :: head(${title})"></head>
+<link rel="stylesheet" data-ignore="true" href="//qidian.gtimg.com/c/=/qd/css/lbfUI/css/icon.a578d.css,/qd/css/lbfUI/css/Drag.41d31.css,/qd/css/lbfUI/css/Checkbox.ef549.css,/qd/css/reset.ddecf.css,/qd/css/global.d41d8.css,/qd/css/font.089a4.css,/qd/css/module.429f5.css,/qd/css/footer.3607a.css,/qd/css/read.3358a.css,/qd/css/layout.5de0f.css,/qd/css/qd_popup.7e65f.css,/qd/css/book_popup.18f47.css,/qd/css/vote_popup.3844d.css">
+<link charset="utf-8" rel="stylesheet" href="https://qidian.gtimg.com/qd/css/lbfUI/css/Panel.css">
+<link charset="utf-8" rel="stylesheet" href="https://qidian.gtimg.com/qd/css/lbfUI/css/LightTip.css">
+<link charset="utf-8" rel="stylesheet" href="https://qidian.gtimg.com/qd/css/lbfUI/css/Popup.css">
+<link charset="utf-8" rel="stylesheet" href="https://qidian.gtimg.com/qd/css/lbfUI/css/Drag.css">
+<style name="lbf-overlay">.lbf-overlay { position:fixed; top:0; left:0;}</style>
+<body class="theme-0 " style="zoom: 1;">
+<div class="share-img">
+    <img src="//bookcover.yuewen.com/qdbimg/349573/3373635/300" width="300" height="300">
+</div>
+<div class="wrap">
+<!--头部导航-->
+    <div class="read-header" id="readHeader" data-l1="40">
+        <div class="wrap-center cf">
+            <div class="left-nav fl">
+                <div class="logo">
+                    <a class="logo-ico" href="javascript:"></a>
+                </div>
+                <ul>
+                    <li class="site" data-l2="1">
+                        <a class="pin-logo" href="//www.qidian.com" target="_blank" data-eid="qd_R01"><span></span></a>
+                        <div class="dropdown">
+                            <a href="//www.qdmm.com" target="_blank" data-eid="qd_R02">起点女生网</a>
+                            <a href="http://chuangshi.qq.com" target="_blank" data-eid="qd_R03">创世中文网</a>
+                            <a href="http://yunqi.qq.com" target="_blank" data-eid="qd_R04">云起书院</a>
+                        </div>
+                    </li>
+                    <li class="app" data-l2="2">
+                        <cite>手机阅读</cite>
+                        <div class="dropdown scan-app hidden">
+                            <div class="box">
+                                <h3>扫描下载起点读书客户端</h3>
+                                <img src="//qidian.gtimg.com/qd/images/qd_qrcode.f4f94.png">
+                                <a href="https://itunes.apple.com/cn/app/id534174796?mt=8" target="_blank" data-eid="qd_R05"><em class="iconfont"></em>App store 下载</a>
+                                <a href="http://download.qidian.com/apknew/source/QDReader.apk" target="_blank" data-eid="qd_R06"><em class="iconfont"></em>Android 下载</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li id="j_nearRead" data-l2="3">
+                        <cite>最近阅读</cite>
+                    </li>
+                    <li class="quick-nav" data-l2="4">
+                        <cite><i class="iconfont"></i>快速导航</cite>
+                        <div class="dropdown type-list">
+                            <div class="type-box">
+                                <h3>分类频道</h3>
+                                <a href="//www.qidian.com/xuanhuan" data-eid="qd_R13" target="_blank">玄幻</a>
+                                <a href="//www.qidian.com/qihuan" data-eid="qd_R14" target="_blank">奇幻</a>
+                                <a href="//www.qidian.com/wuxia" data-eid="qd_R15" target="_blank">武侠</a>
+                                <a href="//www.qidian.com/xianxia" data-eid="qd_R16" target="_blank">仙侠</a>
+                                <a href="//www.qidian.com/dushi" data-eid="qd_R17" target="_blank">都市</a>
+                                <a href="//www.qidian.com/xianshi" data-eid="qd_R18" target="_blank">现实</a>
+                                <a href="//www.qidian.com/lishi" data-eid="qd_R20" target="_blank">历史</a>
+                                <a href="//www.qidian.com/junshi" data-eid="qd_R19" target="_blank">军事</a>
+                                <a href="//www.qidian.com/youxi" data-eid="qd_R21" target="_blank">游戏</a>
+                                <a href="//www.qidian.com/tiyu" data-eid="qd_R22" target="_blank">体育</a>
+                                <a href="//www.qidian.com/kehuan" data-eid="qd_R23" target="_blank">科幻</a>
+                                <a href="//www.qidian.com/lingyi" data-eid="qd_R24" target="_blank">灵异</a>
+                                <a href="//www.qidian.com/2cy" class="ecy" data-eid="qd_R26" target="_blank">二次元</a>
+                                <a href="//www.qidian.com/finish" data-eid="qd_R27" target="_blank">完本</a>
+                                <a href="//www.qdmm.com" data-eid="qd_R25" target="_blank">女生</a>
+                                <a href="//www.qidian.com/book/sanjiang" data-eid="qd_R28" target="_blank">三江</a>
+                            </div>
+                            <div class="type-box">
+                                <h3>其它</h3>
+                                <a href="//write.qq.com/college" data-eid="qd_R29" target="_blank">投稿</a>
+                                <a href="//wwwploy.qidian.com/HelpCenter/default.aspx?type=0&amp;categoryid=58&amp;parentid=53" data-eid="qd_R30" target="_blank">签约</a>
+                                <a href="//wwwploy.qidian.com/ploy/20150520qdsp/theme1.htm" data-eid="qd_R31" target="_blank">福利</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div style="font: 16px/40px 微软雅黑; padding: 30px;" th:utext="${new String (entity.content).replaceAll( '\r\n','<p> <p>') }"></div>
+            <div class="read-login fr">
+                <ul>
+                    <li id="min-search" data-l2="5">
+                        <form action="//www.qidian.com/search" method="get" target="_blank">
+                            <input class="submit-input" type="submit" id="searchSubmit" data-eid="qd_R32">
+                            <input id="pin-input" class="pin-input hide" name="kw" type="text" placeholder="神宠进化">
+                            <label id="pin-search" for="searchSubmit" data-eid="qd_R32"><em class="iconfont"></em></label>
+                        </form>
+                    </li>
+                    <li class="line"></li>
+                    <li class="sign-out hidden" data-l2="6">
+                        <a id="pin-login" href="javascript:" data-eid="qd_R33">登录</a>
+                        <a class="reg" href="//passport.qidian.com/reg.html?appid=10&amp;areaid=1&amp;target=iframe&amp;ticket=1&amp;auto=1&amp;autotime=30&amp;returnUrl=http%3A%2F%2Fwww.qidian.com" target="_blank" data-eid="qd_R34">注册</a>
+                    </li>
+                    <li class="sign-in" data-l2="6">
+                        <a href="//me.qidian.com/Index.aspx" target="_blank" data-eid="qd_R36"><i id="nav-user-name">书友20181105094631384</i><span></span></a>
+                        <div class="dropdown">
+                            <a href="//me.qidian.com/profile/info.aspx" target="_blank" data-eid="qd_R37">账户设置</a>
+                            <a href="//me.qidian.com/account/info.aspx" target="_blank" data-eid="qd_R38">账务中心</a>
+                            <a href="//me.qidian.com/author/authorDoor.aspx" target="_blank" data-eid="qd_R39">作家专区</a>
+                            <a id="exit" href="javascript:" data-eid="qd_R40">退出</a>
+                        </div>
+                    </li>
+                    <li data-l2="6"><a href="//www.qidian.com/charge/meRedirect" target="_blank" data-eid="qd_R35">充值</a></li>
+                </ul>
+            </div>
         </div>
-    <nav style="margin-top: 40px;margin-bottom: 40px; height: 80px;" class="font-weight-bold lead navbar navbar-expand-sm bg-light navbar-light">
-        <!-- Links -->
-        <ul class="navbar-nav text-center row col-12">
-            <li class="nav-item col-4">
-                <a class="nav-link" th:href="'/chapter/'+${entity.volumeId}+'/'+${entity.prev}">上一章</a>
-            </li>
-            <li class="nav-item  col-4">
-                <a class="nav-link" th:href="'/info/'+${bookId}">目录</a>
-            </li>
-            <li class="nav-item  col-4">
-                <a class="nav-link" th:href="'/chapter/'+${entity.volumeId}+'/'+${entity.next}">下一章</a>
-            </li>
-        </ul>
-    </nav>
+    </div>
 
+    <!--<div id="j_bodyRecWrap" class="hidden" style="display: block;">-->
+        <!--<div class="float-op-wrap" style="background-image: url(//qidian.qpic.cn/qidian_common/349573/7d696fc7fe71582a54677f28697fda65/0)" data-l1="3">-->
+            <!--<div class="body-rec-mask"></div>-->
+            <!--<div class="float-op left-op type2">-->
+                <!--<div class="left-person" style="background: url(//qidian.qpic.cn/qidian_common/349573/2062e1b90dcbd974c4dd8b01f0602465/0) no-repeat"><a href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/sslj/way/1?qd_game_key=sslj8x11dongtai&amp;qd_dd_p1=593" data-eid="qd_R123" data-qd_dd_p1="1"></a></div>-->
+                <!--<div class="left-word hidden" style="background: url(//qidian.qpic.cn/qidian_common/349573/60223b9ea88478d0f1506e799d5d4861/0) no-repeat"><a href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/sslj/way/1?qd_game_key=sslj8x11dongtai&amp;qd_dd_p1=593" data-eid="qd_R124" data-qd_dd_p1="1"></a></div>-->
+            <!--</div>-->
+            <!--<div class="float-op right-op type2">-->
+                <!--<div class="right-person" style="background: url(//qidian.qpic.cn/qidian_common/349573/1330ca4cd14dc496a3f2744a8e0dd387/0) center"><a href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/sslj/way/1?qd_game_key=sslj8x11dongtai&amp;qd_dd_p1=593" data-eid="qd_R123" data-qd_dd_p1="1"></a></div>-->
+                <!--<div class="right-word hidden" style="background: url(//qidian.qpic.cn/qidian_common/349573/d8d768d635c55211d57c357637f41669/0) no-repeat"><a href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/sslj/way/1?qd_game_key=sslj8x11dongtai&amp;qd_dd_p1=593" data-eid="qd_R124" data-qd_dd_p1="1"></a></div>-->
+            <!--</div>-->
+        <!--</div></div>-->
+    <!--面包屑导航-->
+    <div class="crumbs-nav" data-l1="1">
+
+        <a href="//www.qidian.com" target="_blank" data-eid="qd_G01">首页</a><em class="iconfont"></em>
+        <a href="//www.qidian.com/xuanhuan" target="_blank" data-chanid="21" id="j_chanId" data-eid="qd_G02">玄幻</a><em class="iconfont"></em>
+        <a href="//www.qidian.com/all?chanId=21&amp;subCateId=8" target="_blank">东方玄幻</a><em class="iconfont"></em>
+
+        <a class="act" href="//book.qidian.com/info/3373635" target="_blank" id="bookImg" data-bid="3373635">乾坤剑神</a>
+    </div>
+
+    <div class="read-main-wrap font-family01" style="font-size:18px" id="j_readMainWrap">
+        <div id="j_chapterBox" data-l1="3">
+
+
+            <div class="text-wrap" id="chapter-362068971" data-cid="362068971" data-purl="javascript:void(0);" data-nurl="//read.qidian.com/chapter/zNuWFXPMnFg1/By1FKCLxEFgex0RJOkJclQ2" data-info="0|-1|76705831|0|0">
+                <div class="main-text-wrap">
+                    <div class="text-head">
+                        <div class="guide-box">
+                            <cite></cite>
+                            <p>点击书签后，可收藏每个章节的书签，“阅读进度”可以在个人中心书架里查看</p>
+                        </div>
+                        <a class="book-mark" href="javascript:" title="书签" data-cid="362068971" data-bid="3373635" data-auid="4256571" data-eid="qd_R104"></a>
+                        <h3 class="j_chapterName" th:text="${entity.chapterName}"></h3>
+                        <div class="text-info cf">
+                            <div class="info fl">
+                                <a href="//book.qidian.com/info/3373635" target="_blank" data-bid="3373635" data-auid="4256571" data-eid="qd_R102"><em class="iconfont"></em><i th:text="${book.bookName}"></i></a>
+
+                                <a href="//me.qidian.com/authorIndex.aspx?id=4256571" target="_blank" data-bid="3373635" data-auid="4256571" data-eid="qd_R103"><em class="iconfont"></em><i th:text="${book.author}"></i></a>
+
+                                <i><em class="iconfont"></em><span class="j_chapterWordCut" th:text="${entity.wordsCount}"></span>字</i>
+                                <i><em class="iconfont"></em><span class="j_updateTime" th:text="${#dates.format(entity.updateTime,'yyyy-MM-dd HH:mm:ss')}"></span></i>
+                            </div>
+
+                    </div>
+                    <div class="read-content j_readContent" th:utext="${new String (entity.content).replaceAll( '\r\n','<p> <p>') }"></div>
+                    <div class="admire-wrap">
+                        <a class="report-btn j_reportBtn" href="javascript:" data-eid="qd_R106"><em class="iconfont"></em>举报</a>
+                        <div class="read-btn-box">
+                            <a class="admire lang j_admireBtn" href="javascript:" data-showtype="3" data-eid="qd_R105">赞赏<span class="j_admireNum"></span></a>
+                        </div>
+                        <dl class="user-active cf">
+                        </dl></div>
+
+
+
+                </div>
+            </div><!-- start 顶部随机广告 -->
+
+            <div id="page-ops" class="page-ops" data-l1="3">
+                <a href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/lzns/way/1?qd_game_key=lzns900x60&amp;qd_dd_p1=1678" target="_blank" data-eid="qd_R125" data-qd_dd_p1="1">
+                    <img src="//qidian.qpic.cn/qidian_common/349573/998ebd598966453283fbc03b1fe8ca51/0"><span class="op-tag"></span></a>
+
+            </div>
+
+            <!-- end 顶部随机广告 -->
+        </div>
+
+        <div class="chapter-control dib-wrap" data-l1="3">
+
+            <a id="j_chapterPrev" th:href="'/chapter/'+${entity.volumeId}+'/'+${entity.prev}">上一章</a><span>|</span>
+            <a th:href="'/info/'+${book.bookId}" target="_blank" data-eid="qd_R108">目录</a><span>|</span>
+            <a id="j_chapterNext"  th:href="'/chapter/'+${entity.volumeId}+'/'+${entity.next}" data-eid="qd_R109">下一章</a>
+        </div>
+
+        <div class="la-ball-pulse j_chapterLoad hidden">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+    <!--浮动导航-->
+<div class="float-wrap" id="j_floatWrap" data-l1="2">
+    <div class="left-bar-list" id="j_leftBarList" style="top: 119px;">
+        <dl>
+            <dd id="j_navCatalogBtn" data-eid="qd_R42">
+                <a href="javascript:"><i><em class="iconfont"></em><span>目录</span></i></a>
+                <div class="guide-box">
+                    <cite></cite>
+                    目录
+                </div>
+            </dd>
+            <dd id="j_navSettingBtn">
+                <a href="javascript:"><i><em class="iconfont"></em><span>设置</span></i></a>
+                <div class="guide-box">
+                    <cite></cite>
+                    设置
+                </div>
+            </dd>
+            <dd data-eid="qd_R84">
+                <a class="add-book" href="javascript:" data-bookid="3373635"><i><em class="iconfont"></em><span>书架</span></i></a>
+                <div class="guide-box">
+                    <cite></cite>
+                    加入书架
+                </div>
+            </dd>
+            <dd data-eid="qd_R85">
+                <a href="//book.qidian.com/info/3373635" target="_blank"><i><em class="iconfont"></em><span>书页</span></i></a>
+                <div class="guide-box">
+                    <cite></cite>
+                    返回书页
+                </div>
+            </dd>
+        </dl>
+    </div>
+</div>
+<div id="userLevel" class="hidden">0</div>
+<div id="authorId" data-authorid="4256571" class="hidden"></div>
 
 </div>
 <!--js导入-->

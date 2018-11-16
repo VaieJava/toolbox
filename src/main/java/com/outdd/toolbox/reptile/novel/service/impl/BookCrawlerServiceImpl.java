@@ -24,10 +24,9 @@ import java.util.List;
 @Service
 public class BookCrawlerServiceImpl extends ParentCrawlerServiceImpl<BookInfo> {
 
-//    @Autowired
-//    @Qualifier("volumeCrawlerServiceImpl")
-//    CrawlerService<VolumeInfo> crawlerService;
-    CrawlerService<VolumeInfo> crawlerService =new VolumeCrawlerServiceImpl();
+    @Autowired
+    @Qualifier("volumeCrawlerServiceImpl")
+    CrawlerService<VolumeInfo> crawlerService;
 
     private int type=2;//1:起点实现 2：新趣笔阁实现 **实现开关
     private int isDownwards=1;//1:启动 2：不启动 **向下进行时开关
@@ -61,7 +60,7 @@ public class BookCrawlerServiceImpl extends ParentCrawlerServiceImpl<BookInfo> {
         if (CommomUtil.isNotNull(doc)) {
             list = new ArrayList<BookInfo>();
             for (Element e : doc.select("")) {
-                list.add(crawlInfo(Jsoup.parse(e.toString())));
+                list.add(crawlInfo(doc));
             }
         }
         return list;
@@ -122,25 +121,25 @@ public class BookCrawlerServiceImpl extends ParentCrawlerServiceImpl<BookInfo> {
         BookInfo entity = null;
         if (CommomUtil.isNotNull(doc)) {
             entity = new BookInfo();
-            try {
-                Elements imgs = doc.select("#fmimg img");
-                String  src=imgs.get(0).attr("src");
-                //作品图片
-                entity.setBookImg(src.getBytes());
-            }catch (Exception e){
+//            try {
+//                Elements imgs = doc.select("#fmimg img");
+//                String  src=imgs.get(0).attr("src");
+//                //作品图片
+//                entity.setBookImg(src.getBytes());
+//            }catch (Exception e){
+//
+//            }
 
-            }
-
-            Elements titleUrls = doc.select("#maininfo");
+            entity.setBookName(doc.select("#title").text());
+            Elements titleUrls = doc.select("#info");
             for (Element titleUrl : titleUrls) {
                 //标题
-                entity.setBookName(titleUrl.child(0).child(0).text());
                 //作者
-                entity.setAuthor(titleUrl.child(0).child(1).text());
+                entity.setAuthor(titleUrl.child(0).text());
                 //分类
 //                entity.setCateId(titleUrl.child(1).child(titleUrl.siblingIndex()-1).text()+""+titleUrl.child(1).child(titleUrl.siblingIndex()).text());
                 //简介
-                entity.setIntro(doc.select("#intro").get(0).child(0).text().replaceAll(" ", "\r\n") + "\r\n");
+                entity.setIntro(doc.select("#intro table div").text().replaceAll(" ", "\r\n") + "\r\n");
 
                 //作品信息
                 entity.setBookId(CommomUtil.numId());

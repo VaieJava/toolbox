@@ -30,7 +30,7 @@ public class ChapterCrawlerServiceImpl   extends ParentCrawlerServiceImpl<Chapte
             chapterRuel=".cf li a";
             contentRule =".j_readContent";
         }else {
-            chapterRuel="dd a";
+            chapterRuel=".ccss a";
             contentRule ="#content";
         }
     }
@@ -46,12 +46,13 @@ public class ChapterCrawlerServiceImpl   extends ParentCrawlerServiceImpl<Chapte
         if (CommomUtil.isNotNull(doc)) {
             //模块处理
             //章节url
-            String url= null;
-            if(type == 1){
-                url= ReptileUtil.getUrl(doc);
-            }else {
-                url="https://www.xbiquge6.com"+ReptileUtil.getUrl(doc);
-            }
+//            String url= null;
+//            if(type==1){
+//                url=ReptileUtil.getUrl(doc);
+//            }else {
+//                url="http://www.pgyzw.com/html/78/78474/"+ReptileUtil.getUrl(doc);
+//            }
+
             //实体类处理
             entity = new ChapterInfo();
             //章节名称
@@ -69,6 +70,7 @@ public class ChapterCrawlerServiceImpl   extends ParentCrawlerServiceImpl<Chapte
         return entity;
     }
 
+    String url;
     /**
      * TODO: 爬取多个详情信息
      *
@@ -85,7 +87,9 @@ public class ChapterCrawlerServiceImpl   extends ParentCrawlerServiceImpl<Chapte
             long next=0;//下一章id
 
             for (Element e : doc.select(chapterRuel)) {
-                ChapterInfo chapterInfo=crawlInfo(Jsoup.parse(e.toString()));
+                url=e.select("a").get(0).absUrl("href");
+                ChapterInfo chapterInfo=crawlInfo(Jsoup.parse(e.html()));
+
                 if(prev!=0){
                     chapterInfo.setPrev(prev);
                 }

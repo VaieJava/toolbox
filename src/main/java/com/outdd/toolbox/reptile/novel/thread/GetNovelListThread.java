@@ -56,7 +56,7 @@ public class GetNovelListThread implements Runnable {
                 Document doc = ReptileUtil.getDocumentOfHttps(url);
                     w.lock();//上了局部写锁
                     NovelList.offer(ReptileUtil.getNovelByUrlToList(doc,listRule));
-                System.out.println("cg");
+//                System.out.println("cg");
                     w.unlock();
                     Map<String, Object> map = ReptileUtil.isNext(doc, nextRule);
                     filag = (Boolean) map.get("filag");

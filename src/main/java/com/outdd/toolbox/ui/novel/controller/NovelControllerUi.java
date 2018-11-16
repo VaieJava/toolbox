@@ -1,7 +1,10 @@
 package com.outdd.toolbox.ui.novel.controller;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.outdd.toolbox.common.util.CommomUtil;
 import com.outdd.toolbox.reptile.novel.pojo.BookInfo;
 import com.outdd.toolbox.reptile.novel.pojo.ChapterInfo;
+import com.outdd.toolbox.ui.novel.service.CategoryService;
 import com.outdd.toolbox.ui.novel.service.NovelServiceUi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,12 +26,18 @@ public class NovelControllerUi {
 
     @Autowired
     NovelServiceUi novelServiceUi;
+    @Autowired
+    CategoryService categoryService;
 
     @RequestMapping("all")
-    public String all(ModelMap mo){
-
-        mo.put("entitys",novelServiceUi.getBookInfo(new BookInfo()));
-        mo.put("title","全部小说");
+    public String all(PageInfo<BookInfo> page,ModelMap mo){
+        page.setPageSize(8);
+        PageInfo<BookInfo> pageEntity = novelServiceUi.getBookInfo(page);
+        String asd=CommomUtil.getPageDiv(pageEntity);
+        mo.put("page",pageEntity);
+        mo.put("pageDiv",asd);
+        mo.put("categorys",categoryService.getFirstCategory(null));
+        mo.put("title","全部作品");
         return site+"all";
     }
     /**
@@ -54,8 +63,11 @@ public class NovelControllerUi {
         if(CommomUtil.isNotNull(volumeId)&&CommomUtil.isNotNull(chapterId)){
             ChapterInfo ci=novelServiceUi.getChapter(volumeId,chapterId);
             Long bookId = novelServiceUi.getVolumeInfo(volumeId).getBookId();
+            if(CommomUtil.isNotNull(bookId)){
+                BookInfo bi=novelServiceUi.getBookInfo(String.valueOf(bookId));
+                mo.put("book",bi);
+            }
             mo.put("entity",ci);
-            mo.put("bookId",bookId);
             mo.put("title",ci.getChapterName());
         }
         return site+"chapter";

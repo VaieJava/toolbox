@@ -1,95 +1,545 @@
 <!DOCTYPE>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="common/header :: head(${title})">
+<head th:replace="common/header :: head(${title})"></head>
+<link rel="stylesheet" data-ignore="true"
+      href="//qidian.gtimg.com/c/=/qd/css/lbfUI/css/icon.a578d.css,/qd/css/lbfUI/css/Drag.41d31.css,/qd/css/reset.ddecf.css,/qd/css/global.d41d8.css,/qd/css/font.089a4.css,/qd/css/footer.3607a.css,/qd/css/qd_popup.7e65f.css,/qd/css/book_popup.18f47.css,/qd/css/vote_popup.3844d.css,/qd/icon/forum/sprite.445f4.css,/qd/css/forum/emoji.c4e81.css"/>
+<link data-ignore="true" rel="stylesheet" href="//qidian.gtimg.com/qd/css/module.429f5.css">
+<link data-ignore="true" rel="stylesheet" href="//qidian.gtimg.com/qd/css/layout.5de0f.css">
+<link data-ignore="true" rel="stylesheet" href="//qidian.gtimg.com/qd/css/book_details.1ccd3.css">
 
-</head>
-<body>
-<div class="container">
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <!-- Links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="/all">全部作品</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">期待</a>
-            </li>
-        </ul>
-    </nav>
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-sm-3">
-                    <img th:src="${new String (entity.bookImg)}" class="img-thumbnail" alt="Cinque Terre">
-                </div>
-                <div class="col-sm-6">
-                    <h1>
-                        <span th:text="${entity.bookName}"></span>
-                        <span>
-                        <a th:text="${entity.author}"></a>
-                            著
-                        </span>
-                    </h1>
-                    <p>
-                        <span> </span>
-                        <a href="#" class="badge badge-pill badge-danger" th:text="${entity.cateId}"></a>
-                    </p>
-                    <p th:text="${entity.intro}"></p>
-                    <p>
-                        <!--<em th:text="${entity.wordNum}"></em>-->
-                        <cite>字</cite>
-                        <i>|</i>
-                        <!--<em th:text="${entity.pageView}"></em>-->
-                        <cite>点击量</cite>
-                        <i>|</i>
-                    </p>
-                </div>
-                <div class="col-sm-3"></div>
+<body style="zoom: 1;">
+<div class="share-img"></div>
+<div class="wrap">
+    <div class="pin-nav-wrap need-search">
+        <div class="box-center cf">
+            <div class="nav-list site-nav fl">
+                <ul>
+                    <li class="site"><a class="pin-logo" href="//www.qidian.com" data-eid="qd_A43"><span></span></a>
+                        <div class="dropdown">
+                            <a href="https://www.qdmm.com" target="" data-eid="qd_A44">AI读书</a>
+                            <a href="http://chuangshi.qq.com" target="" data-eid="qd_A45">创世中文网</a>
+                            <a href="http://yunqi.qq.com" target="" data-eid="qd_A46">云起书院</a>
+                        </div>
+                    </li>
+                    <li><a href="//www.qidian.com/xuanhuan" target="" data-eid="qd_A47">玄幻</a></li>
+                    <li><a href="//www.qidian.com/dushi" target="" data-eid="qd_A48">都市</a></li>
+                    <li><a href="//www.qidian.com/xianxia" target="" data-eid="qd_A49">仙侠</a></li>
+                    <li><a href="//www.qidian.com/kehuan" target="" data-eid="qd_A50">科幻</a></li>
+                    <li><a href="//www.qidian.com/youxi" target="" data-eid="qd_A56">游戏</a></li>
+                    <li><a href="//www.qidian.com/lishi" target="" data-eid="qd_A52">历史</a></li>
+                    <li><a href="//www.qidian.com/rank" target="_blank" data-eid="qd_A53">排行</a></li>
+                    <li class="more"><a href="javascript:" id="top-nav-more" target="" data-eid="qd_A54">更多<span></span></a>
+                        <div class="dropdown">
+                            <a href="//www.qidian.com/all" target="_blank" data-eid="qd_A169">全部作品</a>
+                            <a href="//www.qidian.com/2cy" target="" data-eid="qd_A55">二次元</a>
+                            <a href="//www.qidian.com/qihuan" target="" data-eid="qd_A51">奇幻</a>
+                            <a href="//www.qidian.com/wuxia" target="" data-eid="qd_A57">武侠</a>
+                            <a href="//www.qidian.com/lingyi" target="" data-eid="qd_A58">灵异</a>
+                            <a href="//www.qidian.com/junshi" target="" data-eid="qd_A59">军事</a>
+                            <a href="//www.qidian.com/xianshi" target="" data-eid="qd_A60">现实</a>
+                            <a href="//www.qidian.com/tiyu" target="" data-eid="qd_A61">体育</a>
+                            <a href="//www.qidian.com/duanpian" target="" data-eid="qd_A196">短篇</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-
+            <div class="nav-list min-user fr">
+                <ul>
+                    <li id="min-search">
+                        <form id="formUrl" action="//www.qidian.com/search" method="get" target="_blank">
+                            <label id="pin-search" for="topSearchSubmit" data-eid="qd_A62"><em class="iconfont"></em>
+                            </label>
+                            <input id="pin-input" class="pin-input hide" type="text" name="kw" placeholder="神宠进化">
+                            <input class="submit-input" type="submit" id="topSearchSubmit" data-eid="qd_A62">
+                        </form>
+                    </li>
+                    <li class="line"></li>
+                    <li class="sign-out hidden">
+                        <a id="pin-login" href="javascript:" data-eid="qd_A64">登录</a>
+                        <a class="reg"
+                           href="//passport.qidian.com/reg.html?appid=10&amp;areaid=1&amp;target=iframe&amp;ticket=1&amp;auto=1&amp;autotime=30&amp;returnUrl=https%3A%2F%2Fwww.qidian.com"
+                           target="_blank">注册</a>
+                    </li>
+                    <li class="sign-in">
+                        <a href="//me.qidian.com/Index.aspx" target="_blank" data-eid="qd_A65"><i id="nav-user-name"></i><span></span></a>
+                        <div class="dropdown">
+                            <a href="//me.qidian.com/msg/lists.aspx?page=1" target="_blank" data-eid="qd_A66">消息(<i
+                                    id="top-msg">0</i>)</a>
+                            <a href="//www.qidian.com/charge/meRedirect" target="_blank" data-eid="qd_A67">充值</a>
+                            <a href="//me.qidian.com/Index.aspx" target="_blank" data-eid="qd_A68">个人中心</a>
+                            <a href="//www.qidian.com/help/kf" target="_blank" data-eid="qd_A69">客服中心</a>
+                            <a id="exit" href="javascript:" data-eid="qd_A70">退出</a>
+                        </div>
+                    </li>
+                    <li class="line"></li>
+                    <li class="book-shelf" id="top-book-shelf">
+                        <a href="//me.qidian.com/bookCase/bookCase.aspx" target="_blank" data-eid="qd_A63"><em
+                                class="iconfont"></em><i>我的书架
+                        </i></a></li>
+                </ul>
+            </div>
         </div>
     </div>
-    <!-- Nav tabs -->
-    <ul style="background-color: #FFFFFF;" class="nav" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link " data-toggle="tab" href="#home">作品信息</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#menu1">目录(章)</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#menu2">作品讨论(59条)</a>
-        </li>
-    </ul>
+    <div id="j-topHeadBox" class="top-bg-op-box " data-cookie="1" data-l1="1">
+         <!--style="background-image:url('//qidian.qpic.cn/qidian_common/349573/3149c8136f0ad2689ff466aed4f619e1/0')"-->
 
-    <!-- Tab panes -->
-    <div style="background-color: #FFFFFF;padding: 20px;" class="tab-content">
-        <div id="home" class="container tab-pane fade"><br>
-            <div>
-                <p th:text="${entity.intro}"></p>
+        <!--<a class="jumpWrap"-->
+           <!--href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/hdx/way/1?qd_game_key=hdx2560x450&amp;qd_dd_p1=2652"-->
+           <!--target="_blank" data-eid="qd_G100" data-qd_dd_p1="1">-->
+            <!--<span class="op-tag"></span>-->
+        <!--</a>-->
+        <!--<a class="close-game-op" id="closeTopGame" href="javascript:" data-eid="qd_G101">关闭广告</a>-->
+
+    </div>
+    <div class="top-bg-box " id="j-topBgBox"
+         style="">
+    </div>
+    <div class="crumbs-nav center990  top-op" data-l1="1">
+
+    <span>
+        <cite class="lt"></cite>
+
+    <a href="//www.qidian.com" data-eid="qd_G01">首页</a><em class="iconfont"></em>
+
+        <a href="//www.qidian.com/xuanhuan" target="_blank" data-eid="qd_G02">玄幻频道</a><em class="iconfont"></em>
+
+        <a href="//www.qidian.com/all?chanId=21&amp;subCateId=8" target="_blank">东方玄幻</a><em class="iconfont"></em>
+
+
+    <a href="//book.qidian.com/info/3373635">乾坤剑神</a>
+        <cite class="rt"></cite>
+    </span>
+    </div>
+    <div class="border-shadow ">
+        <span></span>
+        <span></span>
+    </div>
+    <div class="book-detail-wrap center990">
+        <div class="book-information cf" data-l1="2">
+
+
+            <div class="book-img">
+                <a class="J-getJumpUrl" id="bookImg" href="//read.qidian.com/chapter/zNuWFXPMnFg1/eSlFKP1Chzg1"
+                   data-eid="qd_G09" data-bid="3373635"
+                   data-firstchapterjumpurl="//read.qidian.com/chapter/zNuWFXPMnFg1/eSlFKP1Chzg1"><img
+                        ></a>
+            </div>
+
+            <div class="book-info ">
+                <h1>
+                    <em th:text="${entity.bookName}"></em>
+                    <span><a class="writer" href="//me.qidian.com/authorIndex.aspx?id=4256571" target="_blank"
+                             data-eid="qd_G08" th:text="${entity.author}"></a> 著</span>
+
+                </h1>
+                <p class="tag"><span class="blue">连载</span>
+
+                    <span class="blue">签约</span>
+
+
+                    <span class="blue">VIP</span>
+
+                    <a href="//www.qidian.com/xuanhuan" class="red" target="_blank" data-eid="qd_G10">玄幻</a>
+
+                    <a href="//www.qidian.com/all?chanId=21&amp;subCateId=8" class="red" target="_blank"
+                       data-eid="qd_G11">东方玄幻</a>
+
+
+                </p>
+
+                <p class="intro">上古世纪征文参赛作品</p>
+                <p><em>
+                    <style>@font-face {
+                        font-family: QeVHqTBC;
+                        src: url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.eot?') format('eot');
+                        src: url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.woff') format('woff'), url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.ttf') format('truetype');
+                    }
+
+                    .QeVHqTBC {
+                        font-family: 'QeVHqTBC' !important;
+                        display: initial !important;
+                        color: inherit !important;
+                        vertical-align: initial !important;
+                    }</style>
+                    <span class="QeVHqTBC">𘝫𘝨𘝮𘝩𘝪𘝪</span></em><cite>万字</cite><i>|</i><em>
+                    <style>@font-face {
+                        font-family: QeVHqTBC;
+                        src: url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.eot?') format('eot');
+                        src: url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.woff') format('woff'), url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.ttf') format('truetype');
+                    }
+
+                    .QeVHqTBC {
+                        font-family: 'QeVHqTBC' !important;
+                        display: initial !important;
+                        color: inherit !important;
+                        vertical-align: initial !important;
+                    }</style>
+                    <span class="QeVHqTBC">𘝰𘝥𘝬𘝥𘝩𘝫𘝯</span></em><cite>万总会员点击<span>·</span>周
+                    <style>@font-face {
+                        font-family: QeVHqTBC;
+                        src: url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.eot?') format('eot');
+                        src: url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.woff') format('woff'), url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.ttf') format('truetype');
+                    }
+
+                    .QeVHqTBC {
+                        font-family: 'QeVHqTBC' !important;
+                        display: initial !important;
+                        color: inherit !important;
+                        vertical-align: initial !important;
+                    }</style>
+                    <span class="QeVHqTBC">𘝧𘝩𘝰𘝰</span>万</cite><i>|</i><em>
+                    <style>@font-face {
+                        font-family: QeVHqTBC;
+                        src: url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.eot?') format('eot');
+                        src: url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.woff') format('woff'), url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.ttf') format('truetype');
+                    }
+
+                    .QeVHqTBC {
+                        font-family: 'QeVHqTBC' !important;
+                        display: initial !important;
+                        color: inherit !important;
+                        vertical-align: initial !important;
+                    }</style>
+                    <span class="QeVHqTBC">𘝮𘝩𘝫𘝭</span></em><cite>万总推荐<span>·</span>周
+                    <style>@font-face {
+                        font-family: QeVHqTBC;
+                        src: url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.eot?') format('eot');
+                        src: url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.woff') format('woff'), url('https://qidian.gtimg.com/qd_anti_spider/QeVHqTBC.ttf') format('truetype');
+                    }
+
+                    .QeVHqTBC {
+                        font-family: 'QeVHqTBC' !important;
+                        display: initial !important;
+                        color: inherit !important;
+                        vertical-align: initial !important;
+                    }</style>
+                    <span class="QeVHqTBC">𘝫𘝧</span></cite></p>
+
+                <p><a class="red-btn J-getJumpUrl " href="//read.qidian.com/chapter/zNuWFXPMnFg1/eSlFKP1Chzg1"
+                      id="readBtn" data-eid="qd_G03" data-bid="3373635"
+                      data-firstchapterjumpurl="//read.qidian.com/chapter/zNuWFXPMnFg1/eSlFKP1Chzg1">免费试读</a><a
+                        class="blue-btn add-book" id="addBookBtn" href="javascript:" data-eid="qd_G05"
+                        data-bookid="3373635" data-bid="3373635">加入书架</a>
+
+                    <a class="blue-btn" id="topVoteBtn" href="javascript:" data-showtype="1" data-eid="qd_G06">投票互动</a>
+
+                </p>
+
+            </div>
+
+            <div class="comment-wrap">
+                <div id="commentWrap">
+
+                    <div class="j_getData hidden" style="display: block;">
+                        <h4 id="j_bookScore"><span><cite id="score1">8</cite><em>.</em></span><i id="score2">8</i></h4>
+                        <p id="j_userCount"><span>21</span>人评价</p>
+                    </div>
+                </div>
+                <h5>我要评价</h5>
+                <div class="score-mid" id="scoreBtn" data-score="0" data-comment="0" data-eid="qd_G12"
+                     style="cursor: pointer; width: 116px;">
+
+
+                    <img src="//qidian.gtimg.com/qd//images/book_details/star-off.b2a1b.png" alt="1" title="不知所云">&nbsp;<img
+                        src="//qidian.gtimg.com/qd//images/book_details/star-off.b2a1b.png" alt="2"
+                        title="随便看看">&nbsp;<img src="//qidian.gtimg.com/qd//images/book_details/star-off.b2a1b.png"
+                                                alt="3" title="值得一读">&nbsp;<img
+                        src="//qidian.gtimg.com/qd//images/book_details/star-off.b2a1b.png" alt="4"
+                        title="不容错过">&nbsp;<img src="//qidian.gtimg.com/qd//images/book_details/star-off.b2a1b.png"
+                                                alt="5" title="经典必读"><input type="hidden" name="score"></div>
+            </div>
+            <div class="take-wrap">
+                <a class="blue" id="subscribe" href="javascript:" data-eid="qd_G13"><em class="iconfont"></em>订阅</a>
             </div>
         </div>
-        <div id="menu1" class=" container tab-pane  active "><br>
-
-                <div th:each="volume:${entity.volumeInfos}">
-                    <h3 th:text="${volume.volumeName}"></h3>  
-                    <ul class="row">
-                        <li style="border-bottom: 1px solid #F2F2F2;text-overflow: ellipsis;overflow:hidden;white-space:nowrap;" class="col-4" th:each="chapter:${volume.chapterInfos}">
-                            <a class="text-nowrap" th:href="'/chapter/'+${volume.volumeId}+'/'+${chapter.chapterId}" th:text="${chapter.chapterName}" th:title="'首发时间：'+${#dates.format(chapter.updateTime.getTime(), 'yyyy-MM-dd HH:mm:ss')}+'章节字数：'+${chapter.wordsCount}">
+        <div class="content-nav-wrap cf " data-l1="3">
+            <div class="nav-wrap fl">
+                <ul>
+                    <li class="act"><a class="lang" id="j-bookInfoPage" href="javascript:" data-eid="qd_G15">作品信息</a>
+                    </li>
+                    <li class="j_catalog_block "><a class="lang" href="javascript:" id="j_catalogPage" data-eid="qd_G16">目录<i><span
+                            id="J-catalogCount">(3343章)</span></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="catalog-content-wrap hidden" id="j-catalogWrap" data-l1="14">
+            <!-- start 目录分卷 -->
+            <div class="volume-wrap" th:each="volume:${entity.volumeInfos}">
+                <div class="volume">
+                    <div class="cover"></div>
+                    <h3>
+                        <a class="subscri" href="//read.qidian.com/hankread/3373635/51561268" target="_blank"
+                           data-eid="qd_G107"><em class="btn"><b class="iconfont"></b>分卷阅读</em></a>
+                        <i th:text="${volume.volumeName}"></i><i>·</i>共1章<span class="free"> 免费</span><em class="count">本卷共<cite>243</cite>字</em></h3>
+                    <ul class="cf">
+                        <li data-rid="1"  th:each="chapter:${volume.chapterInfos}">
+                            <a class="text-nowrap" th:href="'/chapter/'+${volume.volumeId}+'/'+${chapter.chapterId}"
+                               th:text="${chapter.chapterName}"
+                               th:title="'首发时间：'+${#dates.format(chapter.updateTime.getTime(), 'yyyy-MM-dd HH:mm:ss')}+'章节字数：'+${chapter.wordsCount}">
                             </a>
                         </li>
                     </ul>
-                 </div>
+                </div>
+            </div>
+            <!-- end 目录分卷 -->
+        </div>
+        <div class="book-content-wrap cf ">
 
+            <div class="left-wrap fl">
+                <div class="book-info-detail">
+                    <cite class="icon-pin"></cite>
+                    <div class="book-intro">
+                        <p>
+
+                            　　景言曾是景家最优秀的天才，十六岁突破武道九重天踏入先天之境，整个东临城无人能比，却莫名其妙在进入神风学院后境界跌落，成为笑柄。<br>解开乾坤戒封印，重新崛起，最终制霸天元大陆，成为无数武者仰望的存在。
+
+                        </p>
+                    </div>
+                    <div class="book-state" data-l1="4">
+                        <ul>
+
+
+                            <li>
+                                <b>作者自定义标签</b>
+                                <div class="detail">
+                                    <p class="tag-wrap" data-l1="4">
+
+
+                                        <a class="tags" href="//www.qidian.com/all?tag=坚毅" target="_blank" data-eid="qd_G70">坚毅</a>
+
+
+
+                                        <a class="tags" href="//www.qidian.com/all?tag=无敌文" target="_blank" data-eid="qd_G70">无敌文</a>
+
+
+                                    </p>
+                                </div>
+                            </li>
+
+
+
+                            <li class="honor" id="honor">
+                                <b>荣誉动态</b>
+                                <div class="detail">
+                                    <strong>2018-09-28 累积获得一万个收藏</strong>
+
+                                    <p class="honor-icon cf">
+
+                                        <img src="//qidian.gtimg.com/qd/images/book/badges/gengshangyicenglou.png">
+
+                                        <img src="//qidian.gtimg.com/qd/images/book/badges/xiguanxingbaofa.png">
+
+                                        <a class="blue collect" href="//book.qidian.com/honor/3373635" target="_blank" data-eid="qd_G18">荣誉殿堂</a>
+                                    </p>
+                                </div>
+                            </li>
+
+
+                            <li class="update">
+                                <b>最近更新</b>
+                                <div class="detail">
+                                    <p class="cf">
+                                        <a class="blue" href="//vipreader.qidian.com/chapter/3373635/433974728" data-eid="qd_G19" data-cid="//vipreader.qidian.com/chapter/3373635/433974728" title="第3344章 大棒和胡萝卜" target="_blank">第3344章 大棒和胡萝卜</a><i>·</i><em class="time">10小时前</em>
+                                    </p>
+                                    <p class="tag-wrap mt10">
+
+
+                                        <span class="tags red">连续25天更新</span>
+
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="games-op-wrap" data-l1="17">
+                    <div class="left-game">
+
+                        <a href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/hdx/way/1?qd_game_key=hdx345x70&amp;qd_dd_p1=1024" target="_blank" style="display: block" data-eid="qd_G102" data-qd_dd_p1="1"><img src="//qidian.qpic.cn/qidian_common/349573/794df6dcfaeb2a8e1ddb8066bd0c470f/0"><span class="op-tag"></span></a>
+
+                    </div>
+                    <div class="right-game">
+
+                        <a href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/cqby/way/1?qd_game_key=cqby345x70&amp;qd_dd_p1=1217" target="_blank" style="display: block" data-eid="qd_G103" data-qd_dd_p1="1"><img src="//qidian.qpic.cn/qidian_common/349573/0130255be0572d19c822f287701f693a/0"><span class="op-tag"></span></a>
+
+                    </div>
+                </div>
+
+
+                <div class="like-more mb30 cf" data-l1="6">
+                    <h3 class="lang">喜欢这本书的人还喜欢</h3>
+                    <div class="like-more-list">
+                        <ul class="cf">
+
+                            <li data-rid="1">
+                                <div class="book-img" title="武破九荒">
+                                    <a href="//book.qidian.com/info/3462959" target="_blank" data-eid="qd_G30" data-bid="3462959"><img class="lazy" src="//qidian.gtimg.com/qd/images/common/default_book.5968b.png" data-original="//bookcover.yuewen.com/qdbimg/349573/3462959/90" alt="武破九荒"></a>
+                                </div>
+                                <h4><a href="//book.qidian.com/info/3462959" target="_blank" title="武破九荒" data-eid="qd_G29" data-bid="3462959">武破九荒</a></h4>
+                                <p></p>
+                            </li>
+
+                            <li data-rid="2">
+                                <div class="book-img" title="绝代神主">
+                                    <a href="//book.qidian.com/info/3690449" target="_blank" data-eid="qd_G30" data-bid="3690449"><img class="lazy" src="//qidian.gtimg.com/qd/images/common/default_book.5968b.png" data-original="//bookcover.yuewen.com/qdbimg/349573/3690449/90" alt="绝代神主"></a>
+                                </div>
+                                <h4><a href="//book.qidian.com/info/3690449" target="_blank" title="绝代神主" data-eid="qd_G29" data-bid="3690449">绝代神主</a></h4>
+                                <p></p>
+                            </li>
+
+                            <li data-rid="3">
+                                <div class="book-img" title="无敌天下">
+                                    <a href="//book.qidian.com/info/2866988" target="_blank" data-eid="qd_G30" data-bid="2866988"><img class="lazy" src="//qidian.gtimg.com/qd/images/common/default_book.5968b.png" data-original="//bookcover.yuewen.com/qdbimg/349573/2866988/90" alt="无敌天下"></a>
+                                </div>
+                                <h4><a href="//book.qidian.com/info/2866988" target="_blank" title="无敌天下" data-eid="qd_G29" data-bid="2866988">无敌天下</a></h4>
+                                <p>54%的用户读过</p>
+                            </li>
+
+                            <li data-rid="4">
+                                <div class="book-img" title="神道丹尊">
+                                    <a href="//book.qidian.com/info/3607314" target="_blank" data-eid="qd_G30" data-bid="3607314"><img class="lazy" src="//qidian.gtimg.com/qd/images/common/default_book.5968b.png" data-original="//bookcover.yuewen.com/qdbimg/349573/3607314/90" alt="神道丹尊"></a>
+                                </div>
+                                <h4><a href="//book.qidian.com/info/3607314" target="_blank" title="神道丹尊" data-eid="qd_G29" data-bid="3607314">神道丹尊</a></h4>
+                                <p></p>
+                            </li>
+
+                            <li data-rid="5">
+                                <div class="book-img" title="凌天战尊">
+                                    <a href="//book.qidian.com/info/3394273" target="_blank" data-eid="qd_G30" data-bid="3394273"><img class="lazy" src="//qidian.gtimg.com/qd/images/common/default_book.5968b.png" data-original="//bookcover.yuewen.com/qdbimg/349573/3394273/90" alt="凌天战尊"></a>
+                                </div>
+                                <h4><a href="//book.qidian.com/info/3394273" target="_blank" title="凌天战尊" data-eid="qd_G29" data-bid="3394273">凌天战尊</a></h4>
+                                <p></p>
+                            </li>
+
+                            <li data-rid="6">
+                                <div class="book-img" title="逆剑狂神">
+                                    <a href="//book.qidian.com/info/3360270" target="_blank" data-eid="qd_G30" data-bid="3360270"><img class="lazy" src="//qidian.gtimg.com/qd/images/common/default_book.5968b.png" data-original="//bookcover.yuewen.com/qdbimg/349573/3360270/90" alt="逆剑狂神"></a>
+                                </div>
+                                <h4><a href="//book.qidian.com/info/3360270" target="_blank" title="逆剑狂神" data-eid="qd_G29" data-bid="3360270">逆剑狂神</a></h4>
+                                <p></p>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="right-wrap fr">
+
+                <div class="author-state mb10">
+                    <div class="author-info">
+                        <div class="info-wrap nobt" data-l1="9">
+                            <div class="author-photo" id="authorId" data-authorid="4256571">
+                                <a href="//my.qidian.com/author/4256571" target="_blank" data-eid="qd_G38">
+                                    <img src="//facepic.qidian.com/qd_face/349573/a4256571/0">
+                                </a>
+
+                                <span class="lv">Lv.5</span>
+
+                            </div>
+                            <p><a href="//my.qidian.com/author/4256571" target="_blank">尘山</a>
+
+                                <a class="god-light lv0" href="//my.qidian.com/author/light/4256571" title="大神之光：已经有0人获得" target="_blank" data-eid="qd_G39"></a>
+
+                            </p>
+
+                        </div>
+                        <div class="info-wrap" data-l1="9">
+                            <ul class="work-state cf">
+                                <li>
+                                    <span class="book"></span>
+                                    <p>作品总数</p>
+                                    <em>1</em>
+                                </li>
+                                <li>
+                                    <span class="word"></span>
+                                    <p>累计字数</p>
+                                    <em>695.29万</em>
+                                </li>
+                                <li>
+                                    <span class="coffee"></span>
+                                    <p>创作天数</p>
+                                    <em>1351</em>
+                                </li>
+                            </ul>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+
+                <div class="book-list-wrap mb10" data-l1="13">
+                    <div class="strongrec-list">
+                        <h3 class="wrap-title lang">本周强推<i>·</i>玄幻</h3>
+                        <div class="book-list">
+                            <ul>
+
+                                <li data-rid="1">
+                                    <a class="channel" href="//www.qidian.com/all?chanId=21&amp;subCateId=73" target="_blank" data-eid="qd_G52"><em>「</em>异世大陆<em>」</em></a><strong><a class="name" href="//book.qidian.com/info/1011282175" target="_blank" data-eid="qd_G51" data-bid="1011282175" title="天阿降临">天阿降临</a></strong>
+                                </li>
+
+                                <li data-rid="2">
+                                    <a class="channel" href="//www.qidian.com/all?chanId=21&amp;subCateId=78" target="_blank" data-eid="qd_G52"><em>「</em>高武世界<em>」</em></a><strong><a class="name" href="//book.qidian.com/info/1013362808" target="_blank" data-eid="qd_G51" data-bid="1013362808" title="机甲天魔">机甲天魔</a></strong>
+                                </li>
+
+                                <li data-rid="3">
+                                    <a class="channel" href="//www.qidian.com/all?chanId=21&amp;subCateId=8" target="_blank" data-eid="qd_G52"><em>「</em>东方玄幻<em>」</em></a><strong><a class="name" href="//book.qidian.com/info/1013359238" target="_blank" data-eid="qd_G51" data-bid="1013359238" title="教主无敌">教主无敌</a></strong>
+                                </li>
+
+                                <li data-rid="4">
+                                    <a class="channel" href="//www.qidian.com/all?chanId=21&amp;subCateId=8" target="_blank" data-eid="qd_G52"><em>「</em>东方玄幻<em>」</em></a><strong><a class="name" href="//book.qidian.com/info/1013434134" target="_blank" data-eid="qd_G51" data-bid="1013434134" title="无敌小皇子">无敌小皇子</a></strong>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="right-op-wrap mb10" data-l1="18">
+
+                    <a href="http://cpgame.qd.game.qidian.com/Home/Index/directLogin/name/hycs/way/1?qd_game_key=hycs250x174&amp;qd_dd_p1=2118" target="_blank" style="display: block" data-eid="qd_G105" data-qd_dd_p1="1"><img src="//qidian.qpic.cn/qidian_common/349573/b39f7fd806c87a0d5b6800743889b561/0"><span class="op-tag"></span></a>
+
+                </div>
+                <div class="break-rules-report cf">
+                    <i class="icon-warning"></i>
+                    <a href="//jubao.yuewen.com" target="_blank">举报违规有奖</a>
+                </div>
+
+            </div>
         </div>
-        <div id="menu2" class="container tab-pane fade"><br>
-            <h3>Menu 2</h3>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-        </div>
-    </div>
+
+
 </div>
+    <!--底部导入-->
+    <div th:replace="ui/novel/common/footer :: footer"></div>
 </div>
+
 <!--js导入-->
 <div th:replace="common/footer :: foot"></div>
 </body>
+<script>
+$("#j-bookInfoPage").click(function () {
+ $("#j-bookInfoPage").parent().addClass("act");
+    $("#j_catalogPage").parent().removeClass("act");
+    $("#j-catalogWrap").addClass("hidden")
+    $("#j-catalogWrap").next().removeClass("hidden")
+
+})
+$("#j_catalogPage").click(function () {
+    $("#j-bookInfoPage").parent().removeClass("act");
+    $("#j_catalogPage").parent().addClass("act");
+
+        $("#j-catalogWrap").removeClass("hidden")
+        $("#j-catalogWrap").next().addClass("hidden")
+
+})
+</script>
 </html>

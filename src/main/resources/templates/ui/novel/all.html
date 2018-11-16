@@ -1,16 +1,121 @@
 <!DOCTYPE>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="common/header :: head(${title})">
+<head th:replace="common/header :: head(${title                                                                                                                                                     })"></head>
+<link charset="UTF-8" rel="stylesheet" href="//qidian.gtimg.com/c/=/qd/css/lbfUI/css/Checkbox.ef549.css,/qd/css/reset.ddecf.css,/qd/css/global.d41d8.css,/qd/css/font.089a4.css,/qd/css/header.17852.css,/qd/css/module.429f5.css,/qd/css/list_module.37b81.css,/qd/css/all_finish.82227.css,/qd/css/layout.5de0f.css,/qd/css/qd_popup.7e65f.css,/qd/css/footer.3607a.css,/qd/css/lbfUI/css/ComboBox.8997f.css,/qd/css/lbfUI/css/Button.e5a3e.css">
+<link charset="UTF-8" rel="stylesheet" href="https://qidian.gtimg.com/qd/css/lbfUI/css/Dropdown.css">
+<link charset="UTF-8" rel="stylesheet" href="https://qidian.gtimg.com/qd/css/lbfUI/css/Popup.css">
+<link charset="UTF-8" rel="stylesheet" th:href="@{/css/Autocomplete.css}">
 
-</head>
-<body>
-<div class="container">
-    <ul>
-        <li th:each="entity:${entitys}">
-            <a th:href="'info/'+${entity.bookId}" th:text="${entity.bookName}"></a>
-        </li>
-    </ul>
+
+
+<body style="zoom: 1;">
+
+<div class="share-img"></div>
+<div class="wrap">
+    <div class="top-nav"></div>
+    <div class="top-op-box"></div>
+    <div class="logo-wrap box-center"></div>
+    <div class="main-nav-wrap">
+        <div class="main-nav box-center cf" id="type-hover">
+            <div class="classify-list fl so-awesome" id="classify-list" style="display: none;"></div>
+            <ul>
+                <li class="first"><span>作品分类</span></li>
+                <li class="nav-li"><a class="act" href="#">全部作品</a></li>
+                <li class="nav-li"><a href="#">排行</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="all-pro-wrap box-center cf">
+        <div class="main-content-wrap fl">
+            <div class="tool-bar cf">
+                <div class="view-mode" id="view-mode">
+                    <a href="#"></a>
+                    <em>|</em>
+                    <a href="#"></a>
+                </div>
+                <div class="select-wrap">
+                    <a class="act" href="#">人气排序
+                    <cite class="iconfont">↓</cite>
+                    </a>
+                    <a href="#">更新时间</a>
+                    <a href="#">总收藏</a>
+                    <a href="#">总字数</a>
+                    <div class="sort-count count-info">
+                        <div class="count-text">共<span th:text="${page.total}"></span>本相关作品</div>
+                        <div class="yiwen" id="yiwen">
+                            <div class="iconfont">?</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="all-book-list">
+                <div class="book-img-text">
+                    <ul class="all-img-list cf">
+                        <li th:each="entity:${page.list}">
+                            <div class="book-img-box">
+                                <a target="_blank" th:href="'info/'+${entity.bookId}">
+                                    <img  class="img-thumbnail" alt="Cinque Terre" />
+                                    <!--<img th:src="${new String (entity.bookImg)}" class="img-thumbnail" alt="Cinque Terre">-->
+                                </a>
+                            </div>
+                            <div class="book-mid-info">
+                                <h4>
+                                    <a target="_blank" th:href="'info/'+${entity.bookId}" th:text="${entity.bookName}"></a>
+                                </h4>
+                                <p class="author">
+                                    <img src="//qidian.gtimg.com/qd/images/ico/user.f22d3.png">
+                                    <a class="name" th:text="${entity.author}"></a>
+                                    <em>|</em>
+                                    <span>连载中</span>
+                                </p>
+                                <p class="intro" th:text="${entity.intro}"></p>
+                                <p class="update">
+                                    <span>1546万字</span>
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--分页-->
+            <div class="page-box cf">
+                <div class="pagination fr" id="page-container">
+                    <div th:utext="${pageDiv}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="range-sidebar f1" style="float: right;">
+            <div class="site">
+                <a class="act" href="#">男生</a>
+                <a href="#">女生</a>
+                <a href="#">出版</a>
+            </div>
+            <div class="selected">
+                <p>
+                    <span>已选</span>
+                    <a class="">
+                        玄幻
+                        <cite class="iconfont">X</cite>
+                    </a>
+                </p>
+            </div>
+            <div class="select-list">
+                <div class="work-filter type-filter">
+                    <h3>分类</h3>
+                    <ul class="row-1">
+                        <li th:each="category:${categorys}">
+                            <a th:text="${category.cateNameCn}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--底部导入-->
+    <div th:replace="ui/novel/common/footer :: footer"></div>
 </div>
+
 <!--js导入-->
 <div th:replace="common/footer :: foot"></div>
 </body>

@@ -29,8 +29,14 @@ public class NovelController {
     NovelService novelService;
     String site = "novel/";
 
+    @RequestMapping("insert")
+    public String insert(){
+        novelService.getNovelByAll("http://www.pgyzw.com/fl/0/1.html");
+        return site+"novelRetileTool";
+    }
     @RequestMapping("novelIndex")
     public String novelIndex(){
+
         return site+"novelRetileTool";
     }
 

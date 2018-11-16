@@ -8,6 +8,7 @@
     <result column="intro" property="intro" jdbcType="VARCHAR" />
     <result column="cate_id" property="cateId" jdbcType="INTEGER" />
     <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="book_img" property="bookImg" jdbcType="LONGVARBINARY" />
   </resultMap>
 
   <resultMap id="BaseResultMap" type="com.outdd.toolbox.reptile.novel.pojo.BookInfo" >

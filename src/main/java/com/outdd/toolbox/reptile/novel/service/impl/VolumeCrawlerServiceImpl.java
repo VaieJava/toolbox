@@ -23,10 +23,10 @@ import java.util.List;
  */
 @Service
 public class VolumeCrawlerServiceImpl  extends ParentCrawlerServiceImpl<VolumeInfo>{
-//    @Autowired
-//    @Qualifier("chapterCrawlerServiceImpl")
-//    CrawlerService<ChapterInfo> crawlerService;
-    CrawlerService<ChapterInfo> crawlerService =new ChapterCrawlerServiceImpl();
+    @Autowired
+    @Qualifier("chapterCrawlerServiceImpl")
+    CrawlerService<ChapterInfo> crawlerService;
+
 
     private int type=2;//1:起点实现 2：新趣笔阁实现 **实现开关
     private int isDownwards=1;//1:启动 2：不启动 **向下进行时开关
@@ -39,8 +39,8 @@ public class VolumeCrawlerServiceImpl  extends ParentCrawlerServiceImpl<VolumeIn
             volumeNameRule="h3";
             volumeRule=".volume";
         }else{
-            volumeNameRule="dl dt";
-            volumeRule="#list";
+            volumeNameRule=".acss";
+            volumeRule=".acss";
         }
     }
 
@@ -58,6 +58,10 @@ public class VolumeCrawlerServiceImpl  extends ParentCrawlerServiceImpl<VolumeIn
             Elements volumes = doc.select(volumeNameRule);
             for (Element volume : volumes) {
                 String volumeName = getVolumeName(volume.text());
+                if("".equals(volumeNameRule)){
+                    volumeName="正文卷";
+                }
+                volumeName="正文卷";
                 if(volumeName!=null && volumeName.trim().length()!=0){
                     //卷名称
                     entity.setVolumeName(volumeName);
@@ -92,7 +96,7 @@ public class VolumeCrawlerServiceImpl  extends ParentCrawlerServiceImpl<VolumeIn
             list = new ArrayList<VolumeInfo>();
             int i=1;
             for (Element e : doc.select(volumeRule)) {
-                VolumeInfo v=crawlInfo(Jsoup.parse(e.toString()));
+                VolumeInfo v=crawlInfo(doc);
                 v.setVolumeNum(i);
                 v.setBookId(Long.valueOf(parentId));
                 list.add(v);

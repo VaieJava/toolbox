@@ -1,4 +1,6 @@
 package com.outdd.toolbox.ui.novel.service;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.outdd.toolbox.reptile.novel.pojo.BookInfo;
 import com.outdd.toolbox.reptile.novel.pojo.ChapterInfo;
 import com.outdd.toolbox.reptile.novel.pojo.VolumeInfo;
@@ -38,4 +40,6 @@ public interface NovelServiceUi {
      * @return
      */
     public ChapterInfo getChapter(String volumeId,String chapterId);
+
+    public PageInfo<BookInfo> getBookInfo(PageInfo page);
 }

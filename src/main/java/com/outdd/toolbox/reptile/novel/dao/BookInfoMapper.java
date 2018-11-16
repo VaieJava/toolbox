@@ -15,6 +15,12 @@ public interface BookInfoMapper {
 
     List<BookInfo> selectByEntity(BookInfo record);
 
+    /**
+     * 分页查询数据
+     * @return
+     */
+    List<BookInfo> selectByEntity();
+
     int updateByPrimaryKeySelective(BookInfo record);
 
     int updateByPrimaryKeyWithBLOBs(BookInfo record);

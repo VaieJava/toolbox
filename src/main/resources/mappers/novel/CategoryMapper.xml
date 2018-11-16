@@ -16,6 +16,33 @@
     from category
     where cate_id = #{cateId,jdbcType=INTEGER}
   </select>
+
+  <select id="getFirstCategory" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from category
+    where sub_cate_id = cate_id
+  </select>
+
+  <select id="findList" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from category
+    <where>
+      <if test="cateId != null" >
+       and cate_id= #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="subCateId != null" >
+        and sub_cate_id= #{subCateId,jdbcType=INTEGER},
+      </if>
+      <if test="cateNameCn != null" >
+        and cate_name_cn= #{cateNameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="cateNameEn != null" >
+        and cate_name_en= #{cateNameEn,jdbcType=VARCHAR},
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from category
     where cate_id = #{cateId,jdbcType=INTEGER}

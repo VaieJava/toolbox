@@ -64,8 +64,12 @@ public class ReptileUtil {
     public static Document getDocumentOfHttps(String url) {
         Document document = null;
         try {
-//            document = Jsoup.parse(new URL(url).openStream(), "GBK", url);
-            document =httpUtils.executeGetWithSSLAsDocument(url);
+            document = Jsoup.connect(url).data("query", "Java")
+                    .userAgent("Mozilla")
+                    .cookie("auth", "token")
+                    .timeout(9000)
+                    .post();
+//            document =httpUtils.executeGetWithSSLAsDocument(url);
 //            Jsoup.parse(new URL(url).openStream(), "GBK", url);
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,7 +92,7 @@ public class ReptileUtil {
     }
 
     public static String getUrl(Document doc){
-        return  doc.select("a").get(0).attr("href");
+        return  doc.select("a").get(0).absUrl("href");
     }
 
 
@@ -105,7 +109,7 @@ public class ReptileUtil {
         boolean filag = true;
         Elements next = doc.select(nextName);
         if (next.size() > 0) {
-            map.put("url", "https:" + next.get(0).attr("href"));
+            map.put("url", next.get(0).attr("href"));
         } else {
             filag = false;
         }
@@ -242,7 +246,7 @@ public class ReptileUtil {
             for (Element titleUrl : titleUrls) {
                 Map<String,String> map = new HashMap<String,String>();
                 map.put("title", titleUrl.text());
-                map.put("url", "https:" + titleUrl.attr("href"));
+                map.put("url", titleUrl.absUrl("href"));
                 list.add(map);
             }
         }
