@@ -10,6 +10,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -130,11 +132,22 @@ public class ReptileUtil {
         StringBuffer resultContent = new StringBuffer();
         Elements titles = doc.select(titleRule);//标题
         Elements contents = doc.select(contentsRule);//内容
+        String vUrl = "";
+        String vContent = "";
         for (Element title : titles) {
-            resultContent.append(title.text() + "\r\n");
+            vUrl = title.text();
+            resultContent.append(vUrl + "\r\n");
         }
         for (Element content : contents) {
-            resultContent.append(content.text().replaceAll(" ", "\r\n") + "\r\n");
+            vContent = content.attr("src").replaceAll(" ", "\r\n");
+            resultContent.append(vContent + "\r\n");
+        }
+        try{
+            ReptileUtil.downLoadFromUrl(vContent,
+                    vUrl+".mp3","D:/shengxu/");
+        }catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
         }
         return resultContent.toString();
     }
@@ -276,7 +289,8 @@ public class ReptileUtil {
                 e.printStackTrace();
             }
             for (Element titleUrl : titleUrls) {
-                String urll=host+"" + titleUrl.attr("href");
+//                String urll=host+"" + titleUrl.attr("href");
+                String urll=titleUrl.attr("href");
                 Document document = ReptileUtil.getDocumentOfHttps(urll);
                 if(CommomUtil.isNotNull(document)){
                     fdList.add(document);
@@ -306,5 +320,65 @@ public class ReptileUtil {
         }
         return Details.toString();
     }
+
+    /**
+     * 从网络Url中下载文件
+     * @param urlStr
+     * @param fileName
+     * @param savePath
+     * @throws IOException
+     */
+    public static void  downLoadFromUrl(String urlStr,String fileName,String savePath) throws IOException{
+        URL url = new URL(urlStr);
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        //设置超时间为3秒
+        conn.setConnectTimeout(3*1000);
+        //防止屏蔽程序抓取而返回403错误
+        conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+
+        //得到输入流
+        InputStream inputStream = conn.getInputStream();
+        //获取自己数组
+        byte[] getData = readInputStream(inputStream);
+
+        //文件保存位置
+        File saveDir = new File(savePath);
+        if(!saveDir.exists()){
+            saveDir.mkdir();
+        }
+        File file = new File(saveDir+File.separator+fileName);
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(getData);
+        if(fos!=null){
+            fos.close();
+        }
+        if(inputStream!=null){
+            inputStream.close();
+        }
+
+
+        System.out.println("info:"+url+" download success");
+
+    }
+
+
+
+    /**
+     * 从输入流中获取字节数组
+     * @param inputStream
+     * @return
+     * @throws IOException
+     */
+    public static  byte[] readInputStream(InputStream inputStream) throws IOException {
+        byte[] buffer = new byte[1024];
+        int len = 0;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        while((len = inputStream.read(buffer)) != -1) {
+            bos.write(buffer, 0, len);
+        }
+        bos.close();
+        return bos.toByteArray();
+    }
+
 
 }
